@@ -18,13 +18,25 @@ class ContractServices {
     // Wallet from keyManager
     private var wallet:Wallet
     
-    // Contract addresses
+    // Contracts
     private var rideManagerContract:web3.web3contract
+    
+    // Payment contracts
     private var cUSDContract:web3.web3contract
     private var CeloContract:web3.web3contract
-       
+    
+    // Social Connect contract
+    private var accountsContract:web3.web3contract
+    private var federatedAttestationsContract:web3.web3contract
+    private var odisPaymentsContract:web3.web3contract
+    private var stableTokenContract:web3.web3contract
+    
+    // Masa Soul contract
+    private var soulBoundIdentityContract:web3.web3contract
+    private var soulNameContract:web3.web3contract
+    private var soulStoreContract:web3.web3contract
+    
     init() {
-        
         // Get wallet data from keystore manager
         let keystore = WalletServices.shared.keystoreManager!
         let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
@@ -35,16 +47,26 @@ class ContractServices {
         let keystoreManager = KeystoreManager([keystore])
         // Set up web provider
         let provider = Web3HttpProvider(URL(string: alfajoresTestnet.rpcEndpoint)!, network: .Custom(networkID: alfajoresTestnet.chainId))
+        
         w3 = web3(provider: provider!)
         w3.addKeystoreManager(keystoreManager)
-        
-        
-        // TODO change erc20 abi with celo's token abi
-        // Construct contract address 
+
+        // Construct contracts
         cUSDContract = w3.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVerison)!
         CeloContract = w3.contract(Web3.Utils.erc20ABI, at: CELO , abiVersion: abiVerison)!
-        rideManagerContract = w3.contract(rideManagerAbi,at:rideManagerAddress,abiVersion:abiVerison )!
-       
+        rideManagerContract = w3.contract(rideManagerAbi,at:rideManagerAddress,abiVersion:abiVerison)!
+        
+        // Social Connect contracts
+        accountsContract = w3.contract(accountContractAbi,at:accountsProxyAddress ,abiVersion: abiVerison)!
+        federatedAttestationsContract = w3.contract(federatedAttestationsProxyAbi,at:federatedAttestationAddress ,abiVersion: abiVerison)!
+        odisPaymentsContract = w3.contract(odisPaymentAbi,at: odisPaymentsAddress,abiVersion: abiVerison)!
+        stableTokenContract = w3.contract(stableTokenAbi,at: alfajoresCUSDAddress, abiVersion: abiVerison)!
+        
+        // Masa Soul contracts
+        soulNameContract = w3.contract(soulNameABI,at: soulNameAddress,abiVersion: abiVerison)!
+        soulBoundIdentityContract = w3.contract(soulBoundABi, at: soulBoundIdentityAddress, abiVersion: abiVerison)!
+        soulStoreContract = w3.contract(soulStoreABi, at: soulStoreAddress, abiVersion: abiVerison)!
+        
     }
     
     // MARK: getWallet
@@ -56,19 +78,26 @@ class ContractServices {
     // MARK: getContract
     /// match contract enum to web3 contract
     ///
-    ///
     /// - Parameters :
     ///              `contract` : Contracts  Enum - Contract  to get
     ///
     /// - Returns: web3.web3contract of related contract
-    private func getContract(contract:Contracts) -> web3.web3contract{
+    private func getContract(contract:Contracts) -> web3.web3contract {
         switch(contract) {
         case Contracts.RideManager:
             return rideManagerContract
+        case Contracts.SocialConnect:
+            return rideManagerContract // change to social connect
         case Contracts.CUSD:
             return cUSDContract
         case Contracts.Celo:
             return CeloContract
+        case Contracts.SoulBound:
+            return soulBoundIdentityContract
+        case Contracts.SoulName:
+            return soulNameContract
+        case Contracts.SoulStore:
+            return soulStoreContract
         }
     }
     
@@ -94,7 +123,6 @@ class ContractServices {
                 let senderAddress = EthereumAddress(wallet.address)
 
                 let extraData: Data = Data() // Extra data for contract method
-                
                 
                 var options = TransactionOptions.defaultOptions
                 options.from = senderAddress
@@ -126,25 +154,29 @@ class ContractServices {
     ///
     /// - Returns: completion: `TransactionSendingResult` on success , `ContractError` on failure
     ///
-    func write(contractId:Contracts,method:String,parameters:[AnyObject],password:String,completion:@escaping(Result<TransactionSendingResult,ContractError>) -> Void) {
+    func write(contractId:Contracts,method:String,parameters:[AnyObject],password:String,value:String? = nil,completion:@escaping(Result<TransactionSendingResult,ContractError>) -> Void) {
         let contract = getContract(contract: contractId)
         DispatchQueue.global().async{ [unowned self] in
             do{
                 let senderAddress = EthereumAddress(wallet.address)
-            
                 let extraData: Data = Data() // Extra data for contract method
-                //let amount = Web3.Utils.parseToBigUInt("1", units: .eth)
+                
                 var options = TransactionOptions.defaultOptions
+                
+                if value != nil {
+                    options.value = Web3.Utils.parseToBigUInt(value!,units: .eth)
+                }
+                
                 options.from = senderAddress
                 options.gasPrice = .manual(20000000000)
                 options.gasLimit = .manual(878423)
-                    
+        
                 let tx = contract.write(
                     method,
                     parameters: parameters,
                     extraData: extraData,
                     transactionOptions: options)!
-                
+
                 let result = try tx.send(password: password)
            
                 completion(.success(result))
@@ -154,6 +186,44 @@ class ContractServices {
                 
             }
         }
+    }
+
+    func getSignTx(contractId:Contracts,method:String,parameters:[AnyObject],password:String,value:String? = nil) -> Data? {
+        let contract = getContract(contract: contractId)
+        //DispatchQueue.global().async{ [unowned self] in
+            do{
+                let senderAddress = EthereumAddress(wallet.address)
+                let extraData: Data = Data() // Extra data for contract method
+                
+                var options = TransactionOptions.defaultOptions
+                
+                if value != nil {
+                    options.value = Web3.Utils.parseToBigUInt(value!,units: .eth)
+                }
+                
+                options.from = senderAddress
+                options.gasPrice = .manual(20000000000)
+                options.gasLimit = .manual(878423)
+        
+                let tx = contract.write(
+                    method,
+                    parameters: parameters,
+                    extraData: extraData,
+                    transactionOptions: options)!
+                
+                let privateKey = try WalletServices.shared.getKeyManager().UNSAFE_getPrivateKeyData(password: "123", account: senderAddress!)
+                print(privateKey.toHexString())
+                
+                try tx.transaction.sign(privateKey: privateKey)
+                return tx.transaction.encode()
+                //let result = try tx.send(password: password)
+    
+            }catch {
+                return nil
+                //completion(.failure(ErrorFilter.typeCheck(error: error)))
+                
+            }
+        //}
     }
     
 }

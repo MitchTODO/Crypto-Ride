@@ -14,34 +14,35 @@ struct Registration: View {
     @EnvironmentObject var driver:Driver
     @EnvironmentObject var balance:Balance
     
-    
-    
     var body: some View {
-
             Spacer()
-            
-            VStack(alignment: .center){
+            VStack(alignment: .center) {
+                Text("Driver Registration")
+                    .font(.title3)
+                    .bold()
+                    .padding(10)
                 
-                Text("Looks like this wallet hasn't been registered yet.")
-                    .font(.body).bold()
+                Text("You must setup & register your profile before accepting passengers.")
+                    .font(.body)
+                    .padding(2)
                     .multilineTextAlignment(.center)
-                    .padding()
-                // Sense we are navigating from this view driver is not registered
-                NavigationLink(destination: ProfileView().environmentObject(registered)
-                    .environmentObject(driver)
-                    .environmentObject(balance)
-                ){
-                    Image(systemName: "person.crop.circle")
-                    Text("Register Wallet")
-                    
-                }.padding()
+                
+                HStack {
+                    // Sense we are navigating from this view driver is not registered
+                    NavigationLink(destination: ProfileView().environmentObject(registered)
+                        .environmentObject(driver)
+                        .environmentObject(balance)
+                    ){
+                        Image(systemName: "person.crop.circle")
+                        Text("Register")
+                    }.padding()
+                }
             }
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerSize:CGSize(width: 15, height: 15)))
-
+            .padding(5)
             Spacer()
         }
-    
 }
 
 struct Registration_Previews: PreviewProvider {

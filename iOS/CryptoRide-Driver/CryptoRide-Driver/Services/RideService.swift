@@ -51,6 +51,7 @@ class RideService:ObservableObject{
     @Published var rideId:String?
     @Published var driverState:DriverStates = .none
     @Published var ride:Ride = Ride()
+    
     // Driver rating
     @Published var driverRating = 0
     
@@ -246,7 +247,7 @@ class RideService:ObservableObject{
     ///
     func acceptRide(rideId:String,completion:@escaping(TransactionSendingResult) -> Void) {
         let params = [rideId] as [AnyObject]
-        print(rideId)
+        //print(rideId)
         ContractServices.shared.write(contractId: .RideManager, method: RideManagerMethods.driverAcceptsRide.rawValue, parameters: params, password: password) {
             result in
             DispatchQueue.main.async { [unowned self] in

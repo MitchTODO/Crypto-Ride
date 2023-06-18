@@ -24,8 +24,9 @@ class WalletServices {
         case invalidCredentials
         case failedToGetKeyStore
         case failedToSaveKeyStore
+        case failedToRegisterWallet
+        case failedToLookUpSocialConnect
 
-        
         var id:String {
             self.localizedDescription
         }
@@ -33,35 +34,35 @@ class WalletServices {
         var errorDescription: String? {
             switch self {
             case.invalidCredentials:
-                return NSLocalizedString("Your password in incorrect. Please try again", comment: "")
+                return NSLocalizedString("Incorrect Phone Number or Password. Please try again", comment: "")
             case.failedToGetKeyStore:
                 return NSLocalizedString("Failed to find key store.", comment: "")
             case.failedToSaveKeyStore:
                 return NSLocalizedString("Failed to save key store.", comment: "")
-
+            case.failedToRegisterWallet:
+                return NSLocalizedString("Failed to register wallet", comment: "")
+            case.failedToLookUpSocialConnect:
+                return NSLocalizedString("Failed to lookup social connect.", comment: "")
             }
         }
     }
     
-    init(){
-            // check for keystore
-            guard let keystore = readKeyStore() else { return  }
-            keystoreManager = keystore
-            hasKeyStore = true
+    init() {
+        // check for keystore
+        guard let keystore = readKeyStore() else { return }
+        keystoreManager = keystore
+        hasKeyStore = true
     }
     
     func getKeyManager() -> BIP32Keystore {
         return keystoreManager!
     }
     
-    
-
     // MARK: createKeyStore
     /// Creates new keystore and writes to file
     ///
     /// - Parameters:
     ///                 - `credentials` : Password used to create keyStore
-    ///
     ///
     /// - Returns: completion: Bool on success , KeyStoreServicesError on failure
     ///
@@ -81,7 +82,7 @@ class WalletServices {
                 let keyData = try! JSONEncoder().encode(keystore.keystoreParams)
                 
                 keystoreManager = keystore
-            
+                
                 let addQuery : [String:Any] = [kSecClass as String: kSecClassGenericPassword as String,
                                                kSecAttrAccount as String: tag,
                                                kSecValueData as String: keyData]
@@ -102,6 +103,8 @@ class WalletServices {
         }
     }
     
+    
+    
     // MARK: checkKeyStore
     /// Verifys keystore ownership
     ///
@@ -114,16 +117,15 @@ class WalletServices {
     /// - Returns: completion: Bool on success , KeyStoreServicesError on failure
     ///
     func verifyKeyStore(keyStore:BIP32Keystore,credentials:Credentials,completion:@escaping(Result<Bool,KeyStoreServicesError>) -> Void) {
-            DispatchQueue.global().async{
-                do{
-                    try keyStore.regenerate(oldPassword: credentials.password, newPassword:credentials.password)
-                    completion(.success(true))
-                }catch{
-                    completion(.failure(KeyStoreServicesError.invalidCredentials))
-                }
+        DispatchQueue.global().async{
+            do{
+                try keyStore.regenerate(oldPassword: credentials.password, newPassword:credentials.password)
+                completion(.success(true))
+            }catch{
+                completion(.failure(KeyStoreServicesError.invalidCredentials))
             }
         }
-        
+    }
     
     // MARK: readKeyStore
     /// Returns reads keystore from device key manager.
@@ -138,18 +140,80 @@ class WalletServices {
                     kSecReturnData as String  : kCFBooleanTrue!,
                     kSecMatchLimit as String  : kSecMatchLimitOne ]
     
-        
         var dataTypeRef: AnyObject? = nil
         let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
     
         if status == noErr {
             let data =  dataTypeRef as! Data?
             return BIP32Keystore(data!)
-          
         }else{
             return nil
         }
     }
+    
+    // MARK: registerSocialConnect
+    /// Registers user phone number to wallet via social connect
+    ///
+    func registerSocialConnect(number:String,completion:@escaping(Result<Bool,KeyStoreServicesError>) -> Void) {
+        let url = URL(string: "http://localhost:3000/register")!
+        var request = URLRequest(url:url)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json",forHTTPHeaderField: "Accept")
+        request.httpMethod = "POST"
+        
+        let walletAddress = keystoreManager!.addresses!.first!.address
+        
+        let parameters: [String:Any] = [
+                "phone":number,
+                "account": walletAddress
+            ]
+       
+        request.httpBody = parameters.percentEncoded()
+        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                completion(.failure(KeyStoreServicesError.failedToRegisterWallet))
+                return
+            }
+            completion(.success(true))
+        }
+        task.resume()
+    }
+    
+    
+    // MARK: lookUpNumber
+    ///  Look up social connect phone number
+    /// +18009099999
+    ///
+    func lookUpNumber(number:String, completion:@escaping(Result<[String],Error>) -> Void) {
+        
+        let newS = number.replacingOccurrences(of: " ", with: "", options: .literal, range: nil)
+        let url = URL(string: "http://localhost:3000/number/" + newS)!
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                completion(.failure(error!))
+            }
+            // fix for
+            if data == nil {
+                // failed to get address results 
+                completion(.success([]))
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let addressArray = try decoder.decode([String].self, from: data!)
+                completion(.success(addressArray))
+            } catch {
+                completion(.failure(error))
+            }
 
+        }
+        task.resume()
+    }
+    
 }
 

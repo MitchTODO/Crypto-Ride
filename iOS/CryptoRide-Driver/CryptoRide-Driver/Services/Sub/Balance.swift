@@ -11,10 +11,10 @@ import web3swift
 // MARK: Balance
 /// Manages token balances 
 class Balance:ObservableObject {
+    
     // Token balances
     @Published var cUSD:String = ""
     @Published var CELO:String = ""
-    
     @Published var isLoading = false
     
     init() {
@@ -27,11 +27,13 @@ class Balance:ObservableObject {
     /// Read balance from given a toke contract
     public func getTokenBalance(_ tokenContract:Contracts) {
         isLoading = true
+        
         let ethAddress = ContractServices.shared.getWallet()
+        
         let params = [ethAddress.address] as [AnyObject]
         
         ContractServices.shared.read(contractId:tokenContract, method:  CusdMethods.balanceOf.rawValue, parameters: params) { result in
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async { [unowned self] in
                 isLoading = false
                 switch(result) {
                 case .success(let result):
@@ -41,8 +43,7 @@ class Balance:ObservableObject {
                     }else{
                         CELO = Web3.Utils.formatToEthereumUnits(rawBalance, toUnits: .eth, decimals: 3)!
                     }
-                   
-            
+                  
                 case .failure(let error):
                     print(error)
                 }

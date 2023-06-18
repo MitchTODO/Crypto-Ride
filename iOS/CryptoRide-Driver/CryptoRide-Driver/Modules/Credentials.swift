@@ -8,5 +8,6 @@
 import Foundation
 
 struct Credentials:Codable {
+    var phone:String = "+"
     var password:String = ""
 }

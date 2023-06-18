@@ -30,7 +30,7 @@ struct Settings: View {
                 Text(driver.car)
                 
                 TextField("Twitter Handle",text: $driver.twitter).keyboardType(.twitter)
-                TextField("Instagram Handle",text: $driver.instagram).keyboardType(.twitter)
+                //TextField("Instagram Handle",text: $driver.instagram).keyboardType(.twitter)
             }
             .navigationTitle("Settings")
         }
@@ -49,7 +49,7 @@ struct Settings: View {
                         
                         let defaults = UserDefaults.standard
                         defaults.set(driver.twitter, forKey: "twitter")
-                        defaults.set(driver.instagram, forKey: "instagram")
+                        //defaults.set(driver.instagram, forKey: "instagram")
                         
                     }, label: {
                         Text("Update")

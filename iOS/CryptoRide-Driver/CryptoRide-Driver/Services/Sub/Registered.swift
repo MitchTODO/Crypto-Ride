@@ -17,4 +17,5 @@ class Registered:ObservableObject {
             isRegistered = success
         }
     }
+    
 }

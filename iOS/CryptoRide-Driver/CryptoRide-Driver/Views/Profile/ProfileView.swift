@@ -22,131 +22,66 @@ struct ProfileView: View {
     @EnvironmentObject var balance:Balance
     @EnvironmentObject var driver:Driver
     @EnvironmentObject var manager:LocationManager
+    
     // State objects
     @StateObject var profileVM = ProfileViewModel()
+    
     @State var isLoading = false
     @State var isTransfer = false
     
+    // Social Connect
+    @State var isLookUp = false
+    
+    @State var error:Error? = nil
+    
     // Selectable tokens
     var tokens = ["cUSD","CELO"]
+    var formList:[AnyView] = []
     
-
     var body: some View {
-        
         VStack{
-            if registered.isRegistered == false {
-                switch(profileVM.currentView){
-                case setView.profile:
-                    ProfileRegistration().environmentObject(profileVM)
-                case setView.car:
-                    CarRegistration().environmentObject(profileVM)
-                case setView.location:
-                    LocationRegistration().environmentObject(driver)
-                case setView.rate:
-                    RateRegistration().environmentObject(profileVM)
-                    
-                case setView.fund:
-                    FundRegistration().environmentObject(profileVM)
-                                      .environmentObject(balance)
-                    
-                }
-                HStack{
-                    Spacer()
-                   
-                    Button{
-                        switch(profileVM.currentView){
-                        case setView.profile:
-                            profileVM.currentView = setView.car
-                        case setView.car:
-                            profileVM.currentView = setView.rate
-                        case setView.location:
-                            profileVM.currentView = setView.rate
-                        case setView.rate:
-                            profileVM.currentView = setView.fund
-                        case setView.fund:
-                            isLoading = true
-                            
-                            let car = profileVM.registerNewDriver.vehicle.year + " " +
-                            profileVM.registerNewDriver.vehicle.color
-                            + " " +
-                            profileVM.registerNewDriver.vehicle.makeModel
-                            // set default settings for new driver
-                            let defaults = UserDefaults.standard
-                            defaults.set(profileVM.registerNewDriver.profile.twitterHandle, forKey: "twitter")
-                            defaults.set(profileVM.registerNewDriver.profile.instagramHandle, forKey: "instagram")
-                             
-                            profileVM.registerDriver(rate:profileVM.registerNewDriver.rate.fare, name: profileVM.registerNewDriver.profile.name, car: car) { success in
-                                isLoading = false
-                                registered.isRegistered = true
-                                profileVM.password = ""
-                                
-                                // Set driver details
-                                driver.name = profileVM.registerNewDriver.profile.name
-                                driver.car = car
-                                driver.fare = profileVM.registerNewDriver.rate.fare
-                                driver.twitter = profileVM.registerNewDriver.profile.twitterHandle
-                                driver.instagram = profileVM.registerNewDriver.profile.instagramHandle
-                            }
-                        }
-                        
-                    }label: {
-                        if profileVM.currentView == .fund{
-                            HStack{
-                                if isLoading{
-                                    ProgressView()
-                                }
-                                Text("Send")
-                                Image(systemName: "paperplane.fill")
-                                
-                            }
-                        }else{
-                            HStack{
-                                Text("Next")
-                                Image(systemName: "chevron.forward.square.fill")
-                            }
-                        }
-                        
-                    }.buttonStyle(.borderedProminent)
-                    .disabled(isLoading)
-                }
-                
-            }else{
-                if profileVM.driverInfo != nil {
-                    ScrollView {
+            Spacer()
+            if profileVM.driverInfo != nil {
+                ScrollView {
                     VStack(alignment:.center){
                         VStack {
                             VStack(spacing:8){
+                                CircularProfileImageDL(systemImage: "person.crop.circle")
+                                    .environmentObject(driver.profilePic)
+                               
+                                
                                 Text(driver.name).font(.title)
+                                CircularProfileImageDL(systemImage: "car")
+                                    .environmentObject(driver.vehiclePic)
+                               
                                 Text(driver.car).font(.title3)
                                 Text("Rating ")
                                 RatingView(rating:$driver.rating)
-                           
+                                
                                 Text("Reputation")
                                 Text(driver.reputation)
-                            
+                                
                                 Text("Total Rides")
                                 Text(driver.rideCount)
-                            
+                                
                             }.padding()
                             HStack{
                                 HStack{
                                     Image("cUSDEx")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 40, height: 30, alignment: .center)
+                                        .frame(width: 30, height: 30, alignment: .trailing)
                                     Text("\(balance.cUSD)")
-                                    
                                 }
-                                Divider()
                                 HStack{
                                     Image("CeloEx")
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 40, height: 40, alignment: .center)
+                                        .frame(width: 20, height: 20, alignment: .trailing)
                                     Text("\(balance.CELO)")
-                                    
                                 }
-                                Button{
+                                Divider()
+                                Button {
                                     balance.getTokenBalance(.CUSD)
                                     balance.getTokenBalance(.Celo)
                                     driver.getReputation()
@@ -157,113 +92,156 @@ struct ProfileView: View {
                                         .scaledToFit()
                                         .frame(width: 20, height: 20, alignment: .center)
                                 }.buttonStyle(.borderless)
-                                
                             }
-                            
                         }
                         Divider()
-                        VStack {
-                            Text("To Address").font(.title3)
-                            HStack{
-                                TextField("0x00", text: $profileVM.toAddress)
-                                Button(action:{
-                                    profileVM.toAddress = UIPasteboard.general.string ?? ""
-                                }, label: {
-                                    Image(systemName: "doc.on.clipboard")
-                                })
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Spacer()
+                                Text("Phone Number Or Address").font(.footnote).multilineTextAlignment(.leading)
+                                Spacer()
                             }
-                            HStack{
-                                Text("Send").font(.title3)
-                                Picker("", selection: $profileVM.tokenSelected) {
-                                                ForEach(tokens, id: \.self) {
-                                                    Text($0)
+                            HStack {
+                                Text("To").font(.title3)
+                                TextField("", text: $profileVM.toAddress).onChange(of: profileVM.toAddress) { n in
+                                    if n.first == "0" {
+                                        // must be address
+                                        profileVM.usingPhoneNumber = false
+                                    } else {
+                                        profileVM.usingPhoneNumber = true
+                                        profileVM.toAddress = profileVM.toAddress.applyPatternOnNumbers(pattern: "+# ### ### ####", replacementCharacter: "#")
+                                    }
+                                }
+                                if profileVM.usingPhoneNumber {
+                                    Button(action: {
+                                        isLookUp = true
+                                        profileVM.lookupAddress = ""
+                                        
+                                        // look up phone number
+                                        WalletServices.shared.lookUpNumber(number: profileVM.toAddress) { result in
+                                            isLookUp = false
+                                            switch(result) {
+                                            case .success(let addressList):
+                                                if addressList.isEmpty {
+                                                    profileVM.lookupAddress = "No Social Connect Record Found"
+                                                }else{
+                                                    profileVM.lookupAddress = addressList.first!
+                                                }
+                                                
+                                            case .failure(let error):
+                                                self.error = error
+                                            }
                                         }
+                                    }, label: {
+                                        // show progress view
+                                        if isLookUp {
+                                            ProgressView()
+                                        }else{
+                                            Image(systemName: "magnifyingglass.circle")
+                                        }
+                                       
+                                    }).disabled(isLookUp)
+                                }else{
+                                    Button(action:{
+                                        profileVM.toAddress = UIPasteboard.general.string ?? ""
+                                    }, label: {
+                                        Image(systemName: "doc.on.clipboard")
+                                    })
                                 }
                             }
-     
-                            HStack{
+                            
+                            if profileVM.usingPhoneNumber {
+                                HStack{
+                                    Spacer()
+                                    Text(profileVM.lookupAddress).font(.footnote)
+                                    Spacer()
+                                }
+                            }
+                            
+                            HStack {
+                                Picker("", selection: $profileVM.tokenSelected) {
+                                    ForEach(tokens, id: \.self) {
+                                        Text($0)
+                                    }
+                                }
                                 
                                 TextField("0", text:  $profileVM.amount)
                                 Button(action:{
                                     if profileVM.tokenSelected == "cUSD" {
                                         profileVM.amount = balance.cUSD
+                                       
                                     }else{
                                         profileVM.amount = balance.CELO
+                            
                                     }
-                                   
+                                    
                                 }, label: {
                                     Text("MAX")
                                 })
-                               
                             }
-                            SecureField("Wallet Password", text: $profileVM.password)
+                            
+                            TextField("Wallet Password", text: $profileVM.password)
                                 .multilineTextAlignment(.center)
                                 .textFieldStyle(.roundedBorder)
-                            
-                            Button(action:{
-                                isTransfer = true
-                                profileVM.transfer(){ success in
-                                    // Get request for token balance
-                                    balance.getTokenBalance(.CUSD)
-                                    balance.getTokenBalance(.Celo)
-                                    // Clear all inputs
-                                    profileVM.amount = ""
-                                    profileVM.toAddress = ""
-                                    profileVM.password = ""
-                                    isTransfer = false
-                                }
-                            }, label: {
-                                Text("Send")
-                            }).disabled(profileVM.toAddress.isEmpty || profileVM.amount.isEmpty || isTransfer )
-                            
+                            HStack{
+                                Spacer()
+                                Button(action: {
+                                    isTransfer = true
+                                    profileVM.transfer() { success in
+                                        // Get request for token balance
+                                        balance.getTokenBalance(.CUSD)
+                                        balance.getTokenBalance(.Celo)
+                                        // Clear all inputs
+                                        profileVM.amount = ""
+                                        profileVM.toAddress = ""
+                                        profileVM.password = ""
+                                        profileVM.lookupAddress = ""
+                                        isTransfer = false
+                                    }
+                                }, label: {
+                                    if isTransfer {
+                                        ProgressView()
+                                    }else{
+                                        Text("Send")
+                                    }
+                                    
+                                }).disabled(profileVM.toAddress.isEmpty || profileVM.amount.isEmpty || isTransfer)
+                                Spacer()
+                            }
                         }
                         Divider()
-                        Text("Receive").font(.title3).bold()
-                        
-                        Button(action: {
-                            UIPasteboard.general.string = ContractServices.shared.getWallet().address
-                        }, label: {
-                            Image(uiImage:profileVM.generateQRCode(from: ContractServices.shared.getWallet().address))
-                                .resizable()
-                                .interpolation(.none)
-                                .scaledToFit()
-                                .padding()
-                                .frame(width: 230, height: 230)
-                        })
-                        Text(ContractServices.shared.getWallet().address).font(.body).bold().lineLimit(2)
-                        
+                        Text("Receive").font(.title3)
+                        WalletQRCodeView(address: ContractServices.shared.getWallet().address, phone: profileVM.userPhoneNumber)
                     }.textFieldStyle(.roundedBorder)
                         .padding(EdgeInsets(top: 8, leading: 16,
-                                               bottom: 8, trailing: 16))
+                                            bottom: 8, trailing: 16))
                         .buttonStyle(.borderedProminent)
-                    }
-                }else{
-                    ProgressView()
                 }
+            }else{
+                ProgressView()
             }
-
-        } .alert(item:$profileVM.error) { error in
+        
+        }.alert(item:$profileVM.error) { error in
             Alert(title: Text(profileVM.error!.title), message: Text(profileVM.error!.description), dismissButton: .cancel() {
-                    profileVM.error = nil
-                    profileVM.amount = ""
-                    profileVM.toAddress = ""
-                    profileVM.password = ""
-                    isTransfer = false
-                })
+                profileVM.error = nil
+                profileVM.amount = ""
+                profileVM.toAddress = ""
+                profileVM.password = ""
+                isTransfer = false
+            })
         }
         
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: Settings().environmentObject(registered)
-                                                         .environmentObject(balance)
-                                                         .environmentObject(driver)
-                                                         .environmentObject(profileVM)
+                    .environmentObject(balance)
+                    .environmentObject(driver)
+                    .environmentObject(profileVM)
                 ){
                     Image(systemName: "gear")
                 }
             }
         }
-
     }
 }
 
