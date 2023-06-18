@@ -10,6 +10,7 @@ import Foundation
 // Enum contracts 
 enum Contracts:Int {
     case RideManager = 0
+    case SoulName = 1
     case cUSD = 2
     case CELO = 3
 }

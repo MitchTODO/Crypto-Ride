@@ -44,3 +44,8 @@ enum RideManagerMethods:String {
     
 }
 
+enum SoulNameMethods:String {
+    case getExtension = "getExtension"
+    case getSoulNames = "getSoulNames"
+}
+

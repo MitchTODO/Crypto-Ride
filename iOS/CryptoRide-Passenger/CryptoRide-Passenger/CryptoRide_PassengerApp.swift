@@ -18,13 +18,13 @@ struct CryptoRide_PassengerApp: App {
     
     var body: some Scene {
         WindowGroup {
-                    // check if we are validated
-                    if authentication.isValidated {
-                        ContentView(password: authentication.password).environmentObject(authentication)
-                    }else {
-                        LoginView().environmentObject(authentication)
-                    }
-                }
+            // Check if we are validated
+            if authentication.isValidated {
+                ContentView(password: authentication.password).environmentObject(authentication)
+            }else {
+                LoginView().environmentObject(authentication)
+            }
+        }
     }
 }
 

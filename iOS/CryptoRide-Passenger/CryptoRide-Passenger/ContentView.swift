@@ -29,7 +29,6 @@ struct ContentView: View {
     
     let mapView:MapView = MapView()
 
-
     init(password:String) {
         // Set up are Observed Objects
         rideService = RideService(password:password)
@@ -37,7 +36,6 @@ struct ContentView: View {
         balance = Balance(password: password)
         rideService.observeState(propertyToObserve: webSocket.$rideState)
         rideService.observeRideId(propertyToObserve: webSocket.$rideId)
-
     }
 
     
@@ -56,11 +54,9 @@ struct ContentView: View {
             )
         case .inRide:
             return AnyView(
-                
                 InRide().environmentObject(rideService)
                         .environmentObject(manager)
                         .environmentObject(webSocket)
-                   
             )
         }
     }
