@@ -10,7 +10,6 @@ import SwiftUI
 // Driver states for the content views
 enum DriverStates {
     case none
-    case notRegistered
     case noRide
     case inRide
 }
@@ -18,6 +17,8 @@ enum DriverStates {
 struct ContentView: View {
     
     @EnvironmentObject var authentication:Authentication
+    @EnvironmentObject var appState:AppState
+    
     @StateObject var manager = LocationManager()
     
     @StateObject var registered = Registered()
@@ -29,60 +30,54 @@ struct ContentView: View {
     @ObservedObject var rideService:RideService
     @ObservedObject var webSocket:WebSockets
 
-    
     let mapView:MapView = MapView()
     
     init(password:String) {
         rideService = RideService(password:password)
         webSocket = WebSockets()
+        
         // setup rideState observer from webSocket to rideService
         rideService.observeRideState(propertyToObserve: webSocket.$rideState)
     }
-    
     
     // MARK: containedView
     /// Switch views based on `driverState`
     /// Views will be presented ontop of mapView
     func containedView() -> AnyView {
         switch rideService.driverState {
-        case .none:
-            return AnyView(ProgressState())
-        case .notRegistered:
-            return AnyView(Registration().environmentObject(balance)
-                                         .environmentObject(driver)
-                                         .environmentObject(manager)
-                                         .environmentObject(registered))
-        case .noRide:
-            return AnyView(ListingState().environmentObject(webSocket)
-                                         .environmentObject(rideService)
-                                         .environmentObject(manager))
-        case .inRide:
-            return AnyView(inRideState().environmentObject(rideService)
-                                        .environmentObject(manager)
-                                        .environmentObject(webSocket))
-                            
+            case .none:
+                return AnyView(ProgressState())
+                
+            case .noRide:
+                return AnyView(ListingState().environmentObject(webSocket)
+                                             .environmentObject(rideService)
+                                             .environmentObject(manager))
+            
+            case .inRide:
+                return AnyView(inRideState().environmentObject(rideService)
+                                            .environmentObject(manager)
+                                            .environmentObject(webSocket))
         }
     }
     
     var body: some View {
         NavigationView {
             ZStack {
-                
-                    mapView
-                        .environmentObject(manager)
-                        .environmentObject(rideService)
-                        .environmentObject(driver)
-                        .edgesIgnoringSafeArea(.all)
-                
-                    containedView()
+                mapView
+                    .environmentObject(manager)
+                    .environmentObject(rideService)
+                    .environmentObject(driver)
+                    .edgesIgnoringSafeArea(.all)
+
+                containedView()
             }.task {
+                
                 // Get driver address
                 let driverAddress = ContractServices.shared.getWallet().address
                 // check if driver is registered
                 rideService.isDriver(address:driverAddress ) {
                     isDriver in
                         registered.isRegistered = isDriver
-                        
                     if isDriver {
                         // If registered check if driver is in active ride
                         rideService.getActiveRide(address: driverAddress) {
@@ -107,11 +102,11 @@ struct ContentView: View {
                             }
                         }
                     }else{
-                        // set view state to not registered
-                        rideService.driverState = .notRegistered
+                        // user need to register
+                        appState.updateValidation(state: .register)
                     }
                 }
-                
+            
             }.buttonStyle(.borderedProminent)
                 .safeAreaInset(edge: .top, content: {
                     Color.clear
@@ -121,12 +116,13 @@ struct ContentView: View {
                 })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
-                            Button("Logout") {
-                                webSocket.disconnectSocket()
-                                //manager.deleteDB()
-                                authentication.updateValidation(success: false, password: "")
-                            }
+                        Button("Logout") {
+                            webSocket.disconnectSocket()
+                            //manager.deleteDB()
+                            appState.updateValidation(state: .logout)
+                            //authentication.updateValidation(success: false, phoneNumber: "", password: "", mnemonic: "")
                         }
+                    }
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink(destination: ProfileView()
                                                                  .environmentObject(balance)

@@ -13,11 +13,12 @@ class Authentication:ObservableObject {
     @Published var isValidated = false
     var password = ""
     
-    
-    func updateValidation(success:Bool,password:String?) {
+    func updateValidation(success:Bool, phoneNumber:String?, password:String?, mnemonic:String?) {
         withAnimation {
-            isValidated = success
-            self.password = password ?? ""
+            DispatchQueue.main.async { [self] in
+                isValidated = success
+                self.password = password ?? ""
+            }
         }
     }
 }

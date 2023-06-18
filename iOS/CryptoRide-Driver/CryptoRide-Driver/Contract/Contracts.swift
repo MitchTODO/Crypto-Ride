@@ -10,6 +10,12 @@ import Foundation
 
 enum Contracts:Int {
     case RideManager = 0
-    case Celo = 1
-    case CUSD = 2
+    case SocialConnect = 1
+    case SoulName = 2
+    case SoulBound = 5
+    case SoulStore = 6
+    // Only use Celo stable tokens
+    case Celo = 3
+    case CUSD = 4
+
 }

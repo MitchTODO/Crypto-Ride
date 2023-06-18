@@ -38,3 +38,4 @@ enum RideManagerMethods:String {
     
     case approve = "approve"
 }
+

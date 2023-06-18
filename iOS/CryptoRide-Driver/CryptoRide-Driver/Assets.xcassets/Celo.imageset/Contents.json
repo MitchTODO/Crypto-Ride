@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "CeloLight.png",
+      "filename" : "Celo_Wordmark_CMYK_Onyx 2.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -12,7 +12,7 @@
           "value" : "light"
         }
       ],
-      "filename" : "CeloLight-1.png",
+      "filename" : "Celo_Wordmark_CMYK_Onyx 1.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -23,7 +23,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "CeloDark.png",
+      "filename" : "Celo_Wordmark_CMYK_Snow.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
