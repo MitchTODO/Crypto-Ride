@@ -17,6 +17,13 @@ struct ProfileView:View {
     
     @State private var isShowingScanner = false
     @State var isTransfer = false
+    
+    // Social Connect
+    @State var usingPhoneNumber = false
+    @State var isLookUp = false
+    @State var lookupAddress = ""
+    @State var error:Error? = nil
+    
     // Transferable tokens
     var tokens = ["cUSD","CELO"]
     
@@ -49,7 +56,7 @@ struct ProfileView:View {
                         Image("CeloEx")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 40, height: 40, alignment: .center)
+                            .frame(width: 20, height: 20, alignment: .center)
                         Text("\(balance.CELO)")
                         
                     }
@@ -67,27 +74,75 @@ struct ProfileView:View {
                     
                 }.padding()
                 
-
-            VStack{
-                Text("To Address").font(.title3)
+            Divider()
+            VStack(alignment: .center){
                 HStack{
-                    TextField("0x00", text: $profileVM.toAddress)
-                    Button(action:{
-                        profileVM.toAddress = UIPasteboard.general.string ?? ""
-                    }, label: {
-                        Image(systemName: "doc.on.clipboard")
-                    })
+                    Spacer()
+                    Text("Phone Number or Address").font(.footnote).multilineTextAlignment(.leading)
+                    Spacer()
                 }
-                HStack{
-                    Text("Send").font(.title3)
-                    Picker("", selection: $profileVM.tokenSelected) {
-                                    ForEach(tokens, id: \.self) {
-                                        Text($0)
+                HStack {
+                    Text("To").font(.title3)
+                    TextField("", text: $profileVM.toAddress).onChange(of: profileVM.toAddress) { n in
+                        if n.first == "0" {
+                            // must be address
+                            usingPhoneNumber = false
+                        } else {
+                            usingPhoneNumber = true
+                            profileVM.toAddress = profileVM.toAddress.applyPatternOnNumbers(pattern: "+# ### ### ####", replacementCharacter: "#")
+                        }
+                    }
+                    if usingPhoneNumber {
+                        Button(action: {
+                            isLookUp = true
+                            lookupAddress = ""
+                            // look up phone number
+                            WalletServices.shared.lookUpNumber(number: profileVM.toAddress) { result in
+                                isLookUp = false
+                                switch(result) {
+                                    
+                                case .success(let addressList):
+                                    if addressList.isEmpty {
+                                        lookupAddress = "No Social Connect Record Found"
+                                    }else{
+                                        lookupAddress = addressList.first!
+                                    }
+                                case .failure(let error):
+                                    self.error = error
+                                }
                             }
+                        }, label: {
+                            // show progress view
+                            if isLookUp {
+                                ProgressView()
+                            }else{
+                                Image(systemName: "magnifyingglass.circle")
+                            }
+                        }).disabled(isLookUp)
+                    }else{
+                        Button(action:{
+                            profileVM.toAddress = UIPasteboard.general.string ?? ""
+                        }, label: {
+                            Image(systemName: "doc.on.clipboard")
+                        })
                     }
                 }
-
+                if usingPhoneNumber {
+                    HStack{
+                        Spacer()
+                        Text(lookupAddress).font(.footnote)
+                        Spacer()
+                    }
+                }
+                
                 HStack{
+                    
+                    Picker("", selection: $profileVM.tokenSelected) {
+                        ForEach(tokens, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    
                     TextField("0", text:  $profileVM.amount)
                     Button(action:{
                         if profileVM.tokenSelected == "cUSD" {
@@ -95,6 +150,7 @@ struct ProfileView:View {
                         }else{
                             profileVM.amount = balance.CELO
                         }
+                        
                     }, label: {
                         Text("MAX")
                     })
@@ -124,21 +180,10 @@ struct ProfileView:View {
                 
             }
             
-            
             Divider()
             Text("Receive").font(.title3)
-            // Clickable qr code past address to device pasteboard
-            Button(action: {
-                UIPasteboard.general.string = ContractServices.shared.getWallet().address
-            }, label: {
-                Image(uiImage:profileVM.generateQRCode(from: ContractServices.shared.getWallet().address))
-                    .resizable()
-                    .interpolation(.none)
-                    .scaledToFit()
-                    .padding()
-                    .frame(width: 230, height: 230)
-            })
-            Text(ContractServices.shared.getWallet().address).font(.body).bold().lineLimit(2)
+            
+            WalletQRCodeView(address: ContractServices.shared.getWallet().address, phone: profileVM.userPhoneNumber)
             // Part of the qr code Scanner currently not used
         }.alert(item:$profileVM.error) { error in
             Alert(title: Text(profileVM.error!.title), message: Text(profileVM.error!.description), dismissButton: .cancel() {

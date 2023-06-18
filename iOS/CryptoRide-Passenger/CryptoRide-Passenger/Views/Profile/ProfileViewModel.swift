@@ -21,11 +21,17 @@ class ProfileViewModel:ObservableObject {
     @Published var amount = ""
     @Published var password = ""
     @Published var tokenSelected = "cUSD"
-    var tokenContract:Contracts = .cUSD
+    
+    var userPhoneNumber = ""
+
     // Qr code
     private let context = CIContext()
     private let filter = CIFilter.qrCodeGenerator()
     
+    init() {
+        let defaults = UserDefaults.standard
+        userPhoneNumber = defaults.string(forKey: "phoneNumber") ?? ""
+    }
     
     // MARK: generateQRCode
     /// Encodes string data as a qr code in a UIImage
@@ -59,6 +65,11 @@ class ProfileViewModel:ObservableObject {
             self.error = ContractError(title: "Failed", description: "Invalid To Address")
             return
         }
+        var tokenContract:Contracts = .CELO
+        if tokenSelected == "cUSD" {
+            tokenContract = .cUSD
+        }
+        
         let params = [ethAddress.address,amount] as [AnyObject]
         ContractServices.shared.write(contractId: tokenContract, method: "transfer", parameters: params, password: password) {
             result in

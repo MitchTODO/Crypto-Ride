@@ -262,7 +262,9 @@ class WebSockets:Web3SocketDelegate,ObservableObject {
             }
             
         default:
-            print("Unkown Topic")
+            
+            print("Unkown Topic \(message.params.result.topics.first)")
+            
             
         }
     }

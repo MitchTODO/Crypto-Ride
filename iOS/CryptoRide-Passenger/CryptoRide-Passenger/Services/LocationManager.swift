@@ -27,6 +27,7 @@ import FirebaseDatabase
 /// - TODO
 ///     - Improve management of driver locations
 ///
+@MainActor
 class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     
     @Published var error:Error? = nil
@@ -63,6 +64,10 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     // Route of ride
     @Published var route:MKRoute?
     
+    // Driver images
+    @Published var vehiclePic = ProfileModel()
+    @Published var profilePic = ProfileModel()
+    
     // CLLocationManagerDelegate variables
     @Published var currentLocation:CLLocation?
     private var lastGeocodeTime:Date? = Date()
@@ -74,6 +79,8 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
     // Max distance away from drivers
     private let radiusInM: Double = 1609.34
     private var removedDrivers:[String] = []
+    
+    
     
     override init() {
         super.init()
@@ -200,17 +207,57 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
                     let isDriver = rawRate[0] as! NSNumber
                     let rate = rawRate[1] as! BigUInt
                     
-                    let carAssetUrl = rawRate[2] as! String
+                    // Get IPFS image asset from url
+                    let profileAssetUrl = rawRate[2] as! String
+                    var splitProfileAsset = profileAssetUrl.split(separator: " ")
+                    
+                    if !splitProfileAsset.isEmpty{
+                        let profileCid = splitProfileAsset.popLast()!.trimmingCharacters(in: .whitespacesAndNewlines)
+                        let profileString = URL(string: "https://cloudflare-ipfs.com/ipfs/" + profileCid)!
+                        downloadImage(from:profileString) { result in
+                            if !result.isEmpty {
+                                let image = UIImage(data: result)
+                                if image != nil {
+                                    self.profilePic.loadImage(setImage: Image(uiImage: image!))
+                                }
+                            }
+                        }
+                    }
+                    
+                    var profileDescription = ""
+                    for nPart in splitProfileAsset {
+                        profileDescription += " \(nPart)"
+                    }
+                    
+                    // Get IPFS image asset from url
                     let infoAssetUrl = rawRate[3] as! String
+                    var carAssetSplit = infoAssetUrl.split(separator: " ")
+                    
+                    if !carAssetSplit.isEmpty {
+                        let carCid = carAssetSplit.popLast()!.trimmingCharacters(in: .whitespacesAndNewlines)
+                        let driverString = URL(string:"https://cloudflare-ipfs.com/ipfs/" + carCid)!
+                        downloadImage(from: driverString) { result in
+                            let image = UIImage(data: result)
+                            if image != nil {
+                                self.vehiclePic.loadImage(setImage: Image(uiImage: image!))
+                            }
+                        }
+                    }
+                    
+                    var carDescription = ""
+                    for part in carAssetSplit {
+                        carDescription += " \(part)"
+                    }
                     
                     let driverInfo = DriverInfo(
                         address: details.address,
                         isDriver: Bool(exactly: isDriver)!,
                         rate: rate,
-                        carAssetLink: carAssetUrl,
-                        infoAssetLink: infoAssetUrl,
+                        carAssetLink: carDescription,
+                        infoAssetLink: profileDescription,
                         twitterHandle: details.info!.twitterHandle,
                         facebookHandle: details.info!.facebookHandle)
+                    
                     // Add driver info to array at driver index
                     self.drivers[index].info = driverInfo
                     // Calculate ride estimates with driver rates
@@ -408,4 +455,19 @@ class LocationManager: NSObject,CLLocationManagerDelegate,ObservableObject {
             query.getDocuments(completion: getDocumentsCompletion)
         }
     }
+    
+    public func downloadImage(from url: URL, completion:@escaping(Data) -> Void) {
+        getData(from: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            // always update the UI from the main thread
+            DispatchQueue.main.async() { [weak self] in
+                completion(data)
+            }
+        }
     }
+    
+    func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
+    }
+    
+}

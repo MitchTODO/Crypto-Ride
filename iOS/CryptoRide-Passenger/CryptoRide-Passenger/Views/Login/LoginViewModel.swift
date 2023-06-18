@@ -19,30 +19,53 @@ class LoginViewModel:ObservableObject {
     @Published var hasKeyStore = WalletServices.shared.hasKeyStore
     // mnemonics for newly created wallets
     @Published var mnemonics = ""
+    @Published var showMnemonic = false
+    // register phone number
+    @Published var registerPhoneNumber = false
 
     // MARK: login
     func login(completion: @escaping(Bool) -> Void) {
-        
+        hasKeyStore = WalletServices.shared.hasKeyStore
+        let defaults = UserDefaults.standard
         // Create keystore if no keystore was found
         if !hasKeyStore {
             
+            // Check if number is registered
+            isNumberRegistered(phoneNumber: credentials.phoneNumber) { isRegistered in
+                if isRegistered {return} // return if registed
+            }
+            
             WalletServices.shared.createKeyStore(credentials: credentials) { [unowned self] (result:Result<String, WalletServices.KeyStoreServicesError>) in
-                DispatchQueue.main.async { [unowned self] in
                     switch result {
                     case .success(let mnemonics):
-                        // show mnemonices
-                        self.mnemonics = mnemonics
-                        self.showProgressView = false
-                        // get mnemonices from
-                        completion(true)
+                        
+                        // Register phone number with new address
+                        WalletServices.shared.registerSocialConnect(phone: credentials.phoneNumber) { [unowned self] (result:Result<Bool, Error>) in
+                            DispatchQueue.main.async { [unowned self] in
+                                switch result {
+                                case .success(let result):
+                                    // show mnemonices
+                                    showMnemonic = true
+                                    self.mnemonics = mnemonics
+                                    showProgressView = false
+                                    // save phone number into user defaults
+                                    // this can be back checked
+                                    defaults.set(credentials.phoneNumber, forKey: "phoneNumber")
+                                    // get mnemonices from
+                                    completion(true)
+                                case .failure(let error):
+                                    print(error)
+                                }
+                            }
+                        }
+                        
                     case .failure(let authError):
                         credentials = Credentials()
                         error = authError
                         completion(false)
                     }
-                }
             }
-        }else{
+        } else {
             // Checksum with existing keystore
             let keyStore = WalletServices.shared.getKeyManager()
             WalletServices.shared.verifyKeyStore(keyStore: keyStore, credentials: credentials) {  [unowned self] (result:Result<Bool, WalletServices.KeyStoreServicesError>) in
@@ -57,6 +80,23 @@ class LoginViewModel:ObservableObject {
                         completion(false)
                     }
                 }
+            }
+        }
+    }
+    
+    
+    private func isNumberRegistered(phoneNumber:String,completion: @escaping(Bool) -> Void) {
+        // Check if phone number is already registered
+        WalletServices.shared.lookUpNumber(number: phoneNumber) { (result:Result<[String],Error>) in
+            switch result {
+                case .success(let address):
+                    if address.isEmpty {
+                        completion(true)
+                    }else{
+                        completion(false)
+                    }
+                case .failure(let error):
+                    completion(true)
             }
         }
     }

@@ -20,6 +20,7 @@ class ContractServices {
     
     // Contract addresses
     private var rideManagerContract:web3.web3contract
+    private var soulNameContract:web3.web3contract
     private var cUSDToken:web3.web3contract
     private var celoToken:web3.web3contract
        
@@ -42,6 +43,9 @@ class ContractServices {
         cUSDToken = w3.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVerison)!
         celoToken = w3.contract(Web3.Utils.erc20ABI, at: celo , abiVersion: abiVerison)!
         rideManagerContract = w3.contract(rideManagerAbi,at:rideManagerAddress,abiVersion:abiVerison )!
+        
+        // SoulNames
+        soulNameContract = w3.contract(soulNameABI,at: soulNameAddress,abiVersion: abiVerison)!
        
     }
     
@@ -67,6 +71,8 @@ class ContractServices {
             return cUSDToken
         case Contracts.CELO:
             return celoToken
+        case .SoulName:
+            return soulNameContract
         }
     }
     

@@ -28,47 +28,35 @@ struct SelectDrivers:View {
                             Image(systemName:"xmark.square.fill").padding(10)
                         }.buttonStyle(.bordered)
                         Spacer()
-                        Button(action: {
-                            builderVm.facebookLink(userName:manager.selectedDriver!.info!.facebookHandle!)
-                        }, label: {
-                            Image("facebook")
-                                .resizable()
-                                .frame(width: 30, height: 30, alignment: .center)
-                                .scaledToFit()
-                            
-                        }).buttonStyle(.borderless)
-                   
-                        Button(action: {
-                            builderVm.twitterLink(userName:manager.selectedDriver!.info!.twitterHandle!)
-                        }, label: {
-                            Image("twitter")
-                                .resizable()
-                                .frame(width: 30, height: 30, alignment: .center)
-                                .scaledToFit()
-                        }).buttonStyle(.borderless)
+                        Text("Driver").font(.title2)
                         
                     }
-                    HStack{
-                        Image(systemName: "person.crop.circle")
-                                  .resizable()
-                                  .clipShape(Circle())
-                                  .shadow(radius: 10)
-                                  .overlay(Circle().stroke(Color.black, lineWidth: 1))
-                                  .frame(width: 75, height: 75, alignment: .center)
-                                  .scaledToFit()
-                        VStack(alignment: .trailing){
-                            if(manager.selectedDriver != nil){
+                    
+                    VStack(alignment: .center,spacing: 10.0){
+                        if(manager.selectedDriver != nil){
+                            HStack {
+                                CircularProfileImageDL(systemImage: "person")
+                                    .environmentObject(manager.profilePic)
                                 Text(manager.selectedDriver!.info!.infoAssetLink!).font(.title2).bold()
-                                Text(manager.selectedDriver!.info!.carAssetLink!).font(.title3).bold()
-                                RatingView(rating: manager.selectedDriver!.stats!.rating!, disabled: true)
-                                Text("Reputation \(manager.selectedDriver!.stats!.reputation!.description)").font(.subheadline).bold()
-                                Text("Total Rides \(manager.selectedDriver!.stats!.count!.description)").font(.subheadline).bold()
-                            }else{
-                                ProgressView()
                             }
-                           
+                            HStack{
+                                CircularProfileImageDL(systemImage: "car")
+                                    .environmentObject(manager.vehiclePic)
+                                Text(manager.selectedDriver!.info!.carAssetLink!).font(.title3).bold()
+                            }
+                            
+
+                            Divider()
+                            RatingView(rating: manager.selectedDriver!.stats!.rating!, disabled: true)
+                            
+                            Text("Reputation \(manager.selectedDriver!.stats!.reputation!.description)").font(.subheadline).bold()
+                            Text("Total Rides \(manager.selectedDriver!.stats!.count!.description)").font(.subheadline).bold()
+                        }else{
+                            ProgressView()
                         }
-                    }.padding(5)
+                       
+                    }
+                    
                     
                  
                 }.background(.bar)

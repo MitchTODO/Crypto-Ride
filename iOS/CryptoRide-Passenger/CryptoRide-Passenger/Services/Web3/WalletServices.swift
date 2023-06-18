@@ -149,6 +149,77 @@ class WalletServices {
             return nil
         }
     }
+    
+    // MARK: registerSocialConnect
+    ///  Look up social connect phone number
+    ///
+    ///  - Parameters:
+    ///             `phone`: String
+    ///
+    ///  - Returns:
+    ///             - Escaping <Bool, Error>
+    func registerSocialConnect(phone:String, completion: @escaping(Result<Bool,Error>) -> Void) {
+        let url = URL(string: "http://localhost:3000/register")!
+        var request = URLRequest(url:url)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/json",forHTTPHeaderField: "Accept")
+        request.httpMethod = "POST"
+        
+        let account = WalletServices.shared.getKeyManager().addresses!.first!.address
+        let noSpace = phone.replacingOccurrences(of: " ", with: "")
+        let parameters: [String:Any] = [
+            "phone": noSpace,
+            "account": account
+        ]
+        request.httpBody = parameters.percentEncoded()
+        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+            guard
+                let data = data,
+                let response = response as? HTTPURLResponse,
+                error == nil
+            else {
+                completion(.failure(error!))
+                return
+            }
+            print(String(data: data, encoding: .utf8)!)
+            completion(.success(true))
+        }
+        task.resume()
+    }
+    
+    
+    // MARK: lookUpNumber
+    ///  Get request for social connect given a phone number
+    /// - Parameters :
+    ///          - `number` : String - Phone number to look up address
+    ///
+    /// - Returns: List of string ethereum addresses
+    ///
+    func lookUpNumber(number:String, completion:@escaping(Result<[String],Error>) -> Void) {
+        let newS = number.replacingOccurrences(of: " ", with: "", options: .literal, range: nil)
+        let url = URL(string: "http://localhost:3000/number/" + newS)!
+        
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                completion(.failure(error!))
+            }
+            
+            if data == nil {
+                // failed to get address results
+                completion(.success([]))
+            }
+            do {
+                let decoder = JSONDecoder()
+                let addressArray = try decoder.decode([String].self, from: data!)
+                
+                completion(.success(addressArray))
+            }catch{
+                completion(.failure(error))
+            }
+
+        }
+        task.resume()
+    }
 
 }
 
