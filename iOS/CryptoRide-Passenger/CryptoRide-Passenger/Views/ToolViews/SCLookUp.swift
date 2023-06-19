@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct SCLookUp: View {
-    
+    // Bindings for parent view
     @Binding var showAttempts:Bool
     @Binding var blur:Int
-    
+    // PhoneNumber 
     @State var phoneNumber:String = ""
+    // list Address linked to phone number
     @State var socialConnectAddress:[String]? = nil
-    
+    // Error and progess view
     @State var isLoading = false
     @State var error:Error? = nil
     
@@ -37,14 +38,19 @@ struct SCLookUp: View {
                 .keyboardType(.numberPad)
                 
                 Button(action: {
+                    // clear previous connections 
                     socialConnectAddress = nil
+                    // set loading view 
                     isLoading = true
+                    // Make request for number look up
                     WalletServices.shared.lookUpNumber(number: phoneNumber) { result in
                         isLoading = false
                         switch(result) {
+                         // check success and set address list
                         case .success(let addressList):
                             self.socialConnectAddress = addressList
                         case .failure(let error):
+                            // error handling 
                             self.error = error
                         }
                     }
@@ -57,7 +63,7 @@ struct SCLookUp: View {
                 }).buttonStyle(.borderedProminent)
             }
 
-            
+            // show address results if not nil
             if socialConnectAddress != nil {
                 VStack {
                     Text("Result")
