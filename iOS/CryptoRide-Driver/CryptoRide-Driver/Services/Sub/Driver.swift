@@ -68,16 +68,15 @@ class Driver:ObservableObject {
                     let profileAssetUrl = driverObject[2] as! String
                     var splitProfileAsset = profileAssetUrl.split(separator: " ")
                     // check if profile asset is empty
-                    if !splitProfileAsset.isEmpty{
-                        let profileCid = splitProfileAsset.popLast()!.trimmingCharacters(in: .whitespacesAndNewlines)
-                        let profileString = URL(string: "https://cloudflare-ipfs.com/ipfs/" + profileCid)!
-                        downloadImage(from:profileString) { result in
-                            if !result.isEmpty {
-                            
-                                self.profilePic.loadImage(setImage: Image(uiImage: UIImage(data: result)!))
-                            }
-                        }
-                    }
+                    //if !splitProfileAsset.isEmpty{
+                    //    let profileCid = splitProfileAsset.popLast()!.trimmingCharacters(in: .whitespacesAndNewlines)
+                    //    let profileString = URL(string: "https://cloudflare-ipfs.com/ipfs/" + profileCid)!
+                    //    downloadImage(from:profileString) { result in
+                    //        if !result.isEmpty {
+                    //            self.profilePic.loadImage(setImage: Image(uiImage: UIImage(data: result)!))
+                    //        }
+                    //    }
+                   // }
 
                     
                     var profileDescription = ""
@@ -88,14 +87,13 @@ class Driver:ObservableObject {
                     
                     let infoAssetUrl = driverObject[3] as! String
                     var carAssetSplit = infoAssetUrl.split(separator: " ")
-                    if !splitProfileAsset.isEmpty {
-                        let carCid = carAssetSplit.popLast()!.trimmingCharacters(in: .whitespacesAndNewlines)
-                        let driverString = URL(string:"https://cloudflare-ipfs.com/ipfs/" + carCid)!
-                        downloadImage(from: driverString) { result in
-                            self.vehiclePic.loadImage(setImage: Image(uiImage: UIImage(data: result)!))
-
-                        }
-                    }
+                    //if !splitProfileAsset.isEmpty {
+                    //    let carCid = carAssetSplit.popLast()!.trimmingCharacters(in: .whitespacesAndNewlines)
+                    //    let driverString = URL(string:"https://cloudflare-ipfs.com/ipfs/" + carCid)!
+                    //    downloadImage(from: driverString) { result in
+                    //        self.vehiclePic.loadImage(setImage: Image(uiImage: UIImage(data: result)!))
+                    //    }
+                    //}
 
                     var carDescription = ""
                     for part in carAssetSplit {
