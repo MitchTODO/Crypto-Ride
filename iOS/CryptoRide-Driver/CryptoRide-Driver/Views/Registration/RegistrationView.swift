@@ -98,11 +98,11 @@ struct RegistrationView: View {
                             imageUploading = .inProgress
                             
                             // Three step registration process
-                            // Upload images to ipfs
+                            // Upload images to ipfs (NOT USED)
                             // Profile picture
-                            registrationVM.uploadImage(paramName: "image", fileName: profileId.description, image: UIImage(data: registrationVM.vehiclePic.imageData!)!) { vehicleCID in
+                            //registrationVM.uploadImage(paramName: "image", fileName: profileId.description, image: UIImage(data: registrationVM.vehiclePic.imageData!)!) { vehicleCID in
                                 // Vehicle picture
-                                registrationVM.uploadImage(paramName: "image", fileName: vehicleId.description, image: UIImage(data: registrationVM.profilePic.imageData!)!) { profileCID in
+                                //registrationVM.uploadImage(paramName: "image", fileName: vehicleId.description, image: UIImage(data: registrationVM.profilePic.imageData!)!) { profileCID in
                                     imageUploading = .done
                                     
                                     // Start progressView for contract registeration
@@ -111,8 +111,8 @@ struct RegistrationView: View {
                                     // Register driver with contract
                                     registrationVM.registerDriver(
                                         rate: registrationVM.registerNewDriver.rate.fare,
-                                        name: registrationVM.registerNewDriver.profile.name + " " + profileCID,
-                                        car: car + " " + vehicleCID
+                                        name: registrationVM.registerNewDriver.profile.name + " " + "",
+                                        car: car + " " + ""
                                         ) { registered in
                                             
                                             // start progressView for social connect
@@ -130,8 +130,8 @@ struct RegistrationView: View {
                                                 authentication.password = registrationVM.registerNewDriver.wallet.password
                                             }
                                         }
-                                }
-                            }
+                                //}
+                            //}
                             
                         }
                     }, label: {
