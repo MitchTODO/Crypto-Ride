@@ -1,0 +1,826 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3008C6F42A58EB6100E8EA5B /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6F32A58EB6100E8EA5B /* Credentials.swift */; };
+		3008C6F52A58EB6100E8EA5B /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6F32A58EB6100E8EA5B /* Credentials.swift */; };
+		3008C6F82A58EF5100E8EA5B /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6F72A58EF5100E8EA5B /* RegisterView.swift */; };
+		3008C6F92A58EF5100E8EA5B /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6F72A58EF5100E8EA5B /* RegisterView.swift */; };
+		3008C6FB2A58EF5E00E8EA5B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6FA2A58EF5E00E8EA5B /* RegisterViewModel.swift */; };
+		3008C6FC2A58EF5E00E8EA5B /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6FA2A58EF5E00E8EA5B /* RegisterViewModel.swift */; };
+		3008C6FF2A58FBF000E8EA5B /* DriverRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6FE2A58FBF000E8EA5B /* DriverRegistration.swift */; };
+		3008C7002A58FBF000E8EA5B /* DriverRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C6FE2A58FBF000E8EA5B /* DriverRegistration.swift */; };
+		3008C7022A59119800E8EA5B /* VehicleRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7012A59119800E8EA5B /* VehicleRegistration.swift */; };
+		3008C7032A59119800E8EA5B /* VehicleRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7012A59119800E8EA5B /* VehicleRegistration.swift */; };
+		3008C7052A59122B00E8EA5B /* LocationRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7042A59122B00E8EA5B /* LocationRegistration.swift */; };
+		3008C7062A59122B00E8EA5B /* LocationRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7042A59122B00E8EA5B /* LocationRegistration.swift */; };
+		3008C7082A5916BD00E8EA5B /* PaymentRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7072A5916BD00E8EA5B /* PaymentRegistration.swift */; };
+		3008C7092A5916BD00E8EA5B /* PaymentRegistration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7072A5916BD00E8EA5B /* PaymentRegistration.swift */; };
+		3008C70D2A591A2500E8EA5B /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C70C2A591A2500E8EA5B /* CircleImage.swift */; };
+		3008C70E2A591A2500E8EA5B /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C70C2A591A2500E8EA5B /* CircleImage.swift */; };
+		3008C7102A591A4B00E8EA5B /* CircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C70F2A591A4B00E8EA5B /* CircleModel.swift */; };
+		3008C7112A591A4B00E8EA5B /* CircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C70F2A591A4B00E8EA5B /* CircleModel.swift */; };
+		3008C7172A592DE300E8EA5B /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7162A592DE200E8EA5B /* StringUtils.swift */; };
+		3008C7182A592DE300E8EA5B /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7162A592DE200E8EA5B /* StringUtils.swift */; };
+		3008C71B2A59F4BF00E8EA5B /* WalletGenerationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C71A2A59F4BF00E8EA5B /* WalletGenerationView.swift */; };
+		3008C71C2A59F4C000E8EA5B /* WalletGenerationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C71A2A59F4BF00E8EA5B /* WalletGenerationView.swift */; };
+		3008C71E2A59F63300E8EA5B /* WalletOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C71D2A59F63300E8EA5B /* WalletOverview.swift */; };
+		3008C71F2A59F63300E8EA5B /* WalletOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C71D2A59F63300E8EA5B /* WalletOverview.swift */; };
+		3008C7212A5A085D00E8EA5B /* WalletPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7202A5A085D00E8EA5B /* WalletPayment.swift */; };
+		3008C7222A5A085D00E8EA5B /* WalletPayment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7202A5A085D00E8EA5B /* WalletPayment.swift */; };
+		3008C7242A5A159A00E8EA5B /* WalletQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7232A5A159A00E8EA5B /* WalletQRCodeView.swift */; };
+		3008C7252A5A159A00E8EA5B /* WalletQRCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7232A5A159A00E8EA5B /* WalletQRCodeView.swift */; };
+		3008C7272A5A331500E8EA5B /* RegOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7262A5A331500E8EA5B /* RegOverView.swift */; };
+		3008C7282A5A331500E8EA5B /* RegOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008C7262A5A331500E8EA5B /* RegOverView.swift */; };
+		30443FEE2A58ABAF0059ABA7 /* Crypto_Ride_PassengerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30443FED2A58ABAF0059ABA7 /* Crypto_Ride_PassengerApp.swift */; };
+		30443FF02A58ABAF0059ABA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30443FEF2A58ABAF0059ABA7 /* ContentView.swift */; };
+		30443FF22A58ABB20059ABA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30443FF12A58ABB20059ABA7 /* Assets.xcassets */; };
+		30443FF52A58ABB20059ABA7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30443FF42A58ABB20059ABA7 /* Preview Assets.xcassets */; };
+		304440002A58ABE30059ABA7 /* Crypto_Ride_DriverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30443FFF2A58ABE30059ABA7 /* Crypto_Ride_DriverApp.swift */; };
+		304440022A58ABE30059ABA7 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304440012A58ABE30059ABA7 /* LoginView.swift */; };
+		304440042A58ABE50059ABA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304440032A58ABE50059ABA7 /* Assets.xcassets */; };
+		304440072A58ABE50059ABA7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304440062A58ABE50059ABA7 /* Preview Assets.xcassets */; };
+		3044400C2A58AFA60059ABA7 /* Contracts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044400B2A58AFA50059ABA7 /* Contracts.swift */; };
+		304440132A58B1000059ABA7 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304440122A58B1000059ABA7 /* Events.swift */; };
+		304440152A58B1180059ABA7 /* Methods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304440142A58B1180059ABA7 /* Methods.swift */; };
+		304440182A58B34E0059ABA7 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304440162A58B19F0059ABA7 /* Authentication.swift */; };
+		3044401A2A58B38E0059ABA7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304440192A58B38E0059ABA7 /* ContentView.swift */; };
+		304440232A58BBB20059ABA7 /* AtomicAge-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 304440222A58BBB20059ABA7 /* AtomicAge-Regular.ttf */; };
+		304440242A58BBB20059ABA7 /* AtomicAge-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 304440222A58BBB20059ABA7 /* AtomicAge-Regular.ttf */; };
+		304440262A58BC610059ABA7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304440252A58BC610059ABA7 /* Media.xcassets */; };
+		304440272A58BC610059ABA7 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 304440252A58BC610059ABA7 /* Media.xcassets */; };
+		3044402B2A58C4880059ABA7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044402A2A58C4880059ABA7 /* LoginViewModel.swift */; };
+		3044402C2A58C4880059ABA7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044402A2A58C4880059ABA7 /* LoginViewModel.swift */; };
+		3044402E2A58CF9C0059ABA7 /* WalletServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044402D2A58CF9C0059ABA7 /* WalletServices.swift */; };
+		3044402F2A58CF9C0059ABA7 /* WalletServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3044402D2A58CF9C0059ABA7 /* WalletServices.swift */; };
+		7DFC2A80D58D4BB2385FC1B8 /* Pods_Crypto_Ride_Passenger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9D73017761BE67247FF52C82 /* Pods_Crypto_Ride_Passenger.framework */; };
+		AF52A0AEFA4A82EB9128DADE /* Pods_Crypto_Ride_Driver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F8A00925EA8436F75DCDBD /* Pods_Crypto_Ride_Driver.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0B05039702F8EA9FB5209202 /* Pods-Crypto-Ride-Passenger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto-Ride-Passenger.release.xcconfig"; path = "Target Support Files/Pods-Crypto-Ride-Passenger/Pods-Crypto-Ride-Passenger.release.xcconfig"; sourceTree = "<group>"; };
+		13F8A00925EA8436F75DCDBD /* Pods_Crypto_Ride_Driver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crypto_Ride_Driver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3008C6F32A58EB6100E8EA5B /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		3008C6F72A58EF5100E8EA5B /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		3008C6FA2A58EF5E00E8EA5B /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		3008C6FE2A58FBF000E8EA5B /* DriverRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverRegistration.swift; sourceTree = "<group>"; };
+		3008C7012A59119800E8EA5B /* VehicleRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleRegistration.swift; sourceTree = "<group>"; };
+		3008C7042A59122B00E8EA5B /* LocationRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRegistration.swift; sourceTree = "<group>"; };
+		3008C7072A5916BD00E8EA5B /* PaymentRegistration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentRegistration.swift; sourceTree = "<group>"; };
+		3008C70C2A591A2500E8EA5B /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
+		3008C70F2A591A4B00E8EA5B /* CircleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleModel.swift; sourceTree = "<group>"; };
+		3008C7162A592DE200E8EA5B /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		3008C71A2A59F4BF00E8EA5B /* WalletGenerationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletGenerationView.swift; sourceTree = "<group>"; };
+		3008C71D2A59F63300E8EA5B /* WalletOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletOverview.swift; sourceTree = "<group>"; };
+		3008C7202A5A085D00E8EA5B /* WalletPayment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletPayment.swift; sourceTree = "<group>"; };
+		3008C7232A5A159A00E8EA5B /* WalletQRCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletQRCodeView.swift; sourceTree = "<group>"; };
+		3008C7262A5A331500E8EA5B /* RegOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegOverView.swift; sourceTree = "<group>"; };
+		30443FEB2A58ABAF0059ABA7 /* Crypto-Ride-Passenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto-Ride-Passenger.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30443FED2A58ABAF0059ABA7 /* Crypto_Ride_PassengerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto_Ride_PassengerApp.swift; sourceTree = "<group>"; };
+		30443FEF2A58ABAF0059ABA7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		30443FF12A58ABB20059ABA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		30443FF42A58ABB20059ABA7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		30443FFD2A58ABE30059ABA7 /* Crypto-Ride-Driver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto-Ride-Driver.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		30443FFF2A58ABE30059ABA7 /* Crypto_Ride_DriverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Crypto_Ride_DriverApp.swift; sourceTree = "<group>"; };
+		304440012A58ABE30059ABA7 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		304440032A58ABE50059ABA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		304440062A58ABE50059ABA7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		3044400B2A58AFA50059ABA7 /* Contracts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contracts.swift; sourceTree = "<group>"; };
+		304440122A58B1000059ABA7 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		304440142A58B1180059ABA7 /* Methods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Methods.swift; sourceTree = "<group>"; };
+		304440162A58B19F0059ABA7 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		304440192A58B38E0059ABA7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		3044401E2A58B8450059ABA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		304440222A58BBB20059ABA7 /* AtomicAge-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AtomicAge-Regular.ttf"; sourceTree = "<group>"; };
+		304440252A58BC610059ABA7 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		3044402A2A58C4880059ABA7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		3044402D2A58CF9C0059ABA7 /* WalletServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletServices.swift; sourceTree = "<group>"; };
+		5190122AAAF931627A3AC73F /* Pods-Crypto-Ride-Passenger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto-Ride-Passenger.debug.xcconfig"; path = "Target Support Files/Pods-Crypto-Ride-Passenger/Pods-Crypto-Ride-Passenger.debug.xcconfig"; sourceTree = "<group>"; };
+		6CEC30E6CDB4F3F27B592E38 /* Pods-Crypto-Ride-Driver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto-Ride-Driver.debug.xcconfig"; path = "Target Support Files/Pods-Crypto-Ride-Driver/Pods-Crypto-Ride-Driver.debug.xcconfig"; sourceTree = "<group>"; };
+		88E1E08E838E660A84B0F05C /* Pods-Crypto-Ride-Driver.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Crypto-Ride-Driver.release.xcconfig"; path = "Target Support Files/Pods-Crypto-Ride-Driver/Pods-Crypto-Ride-Driver.release.xcconfig"; sourceTree = "<group>"; };
+		9D73017761BE67247FF52C82 /* Pods_Crypto_Ride_Passenger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Crypto_Ride_Passenger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		30443FE82A58ABAF0059ABA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DFC2A80D58D4BB2385FC1B8 /* Pods_Crypto_Ride_Passenger.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30443FFA2A58ABE30059ABA7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AF52A0AEFA4A82EB9128DADE /* Pods_Crypto_Ride_Driver.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3008C6F62A58EEE300E8EA5B /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				3008C6FD2A58FBC300E8EA5B /* Sub */,
+				3008C6F72A58EF5100E8EA5B /* RegisterView.swift */,
+				3008C6FA2A58EF5E00E8EA5B /* RegisterViewModel.swift */,
+			);
+			path = Registration;
+			sourceTree = "<group>";
+		};
+		3008C6FD2A58FBC300E8EA5B /* Sub */ = {
+			isa = PBXGroup;
+			children = (
+				3008C7192A59F4A100E8EA5B /* SubPaymentViews */,
+				3008C6FE2A58FBF000E8EA5B /* DriverRegistration.swift */,
+				3008C7012A59119800E8EA5B /* VehicleRegistration.swift */,
+				3008C7042A59122B00E8EA5B /* LocationRegistration.swift */,
+				3008C7072A5916BD00E8EA5B /* PaymentRegistration.swift */,
+				3008C7262A5A331500E8EA5B /* RegOverView.swift */,
+			);
+			path = Sub;
+			sourceTree = "<group>";
+		};
+		3008C70B2A59198C00E8EA5B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				3008C70C2A591A2500E8EA5B /* CircleImage.swift */,
+				3008C70F2A591A4B00E8EA5B /* CircleModel.swift */,
+				3008C7232A5A159A00E8EA5B /* WalletQRCodeView.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		3008C7192A59F4A100E8EA5B /* SubPaymentViews */ = {
+			isa = PBXGroup;
+			children = (
+				3008C71A2A59F4BF00E8EA5B /* WalletGenerationView.swift */,
+				3008C71D2A59F63300E8EA5B /* WalletOverview.swift */,
+				3008C7202A5A085D00E8EA5B /* WalletPayment.swift */,
+			);
+			path = SubPaymentViews;
+			sourceTree = "<group>";
+		};
+		30443FCD2A58AB720059ABA7 = {
+			isa = PBXGroup;
+			children = (
+				3008C6F32A58EB6100E8EA5B /* Credentials.swift */,
+				304440252A58BC610059ABA7 /* Media.xcassets */,
+				304440222A58BBB20059ABA7 /* AtomicAge-Regular.ttf */,
+				304440162A58B19F0059ABA7 /* Authentication.swift */,
+				304440102A58AFDA0059ABA7 /* Utils */,
+				3044400F2A58AFCE0059ABA7 /* Services */,
+				3044400E2A58AFBF0059ABA7 /* Modules */,
+				3044400D2A58AFAE0059ABA7 /* Contract */,
+				30443FEC2A58ABAF0059ABA7 /* Crypto-Ride-Passenger */,
+				30443FFE2A58ABE30059ABA7 /* Crypto-Ride-Driver */,
+				30443FD72A58AB720059ABA7 /* Products */,
+				974A840B4CCB4CECAAD6557E /* Pods */,
+				D7D03324506D44CA712A5D9B /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		30443FD72A58AB720059ABA7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				30443FEB2A58ABAF0059ABA7 /* Crypto-Ride-Passenger.app */,
+				30443FFD2A58ABE30059ABA7 /* Crypto-Ride-Driver.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		30443FEC2A58ABAF0059ABA7 /* Crypto-Ride-Passenger */ = {
+			isa = PBXGroup;
+			children = (
+				30443FED2A58ABAF0059ABA7 /* Crypto_Ride_PassengerApp.swift */,
+				30443FEF2A58ABAF0059ABA7 /* ContentView.swift */,
+				30443FF12A58ABB20059ABA7 /* Assets.xcassets */,
+				30443FF32A58ABB20059ABA7 /* Preview Content */,
+			);
+			path = "Crypto-Ride-Passenger";
+			sourceTree = "<group>";
+		};
+		30443FF32A58ABB20059ABA7 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				30443FF42A58ABB20059ABA7 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		30443FFE2A58ABE30059ABA7 /* Crypto-Ride-Driver */ = {
+			isa = PBXGroup;
+			children = (
+				3044401E2A58B8450059ABA7 /* Info.plist */,
+				304440282A58C43C0059ABA7 /* Views */,
+				30443FFF2A58ABE30059ABA7 /* Crypto_Ride_DriverApp.swift */,
+				304440192A58B38E0059ABA7 /* ContentView.swift */,
+				304440032A58ABE50059ABA7 /* Assets.xcassets */,
+				304440052A58ABE50059ABA7 /* Preview Content */,
+			);
+			path = "Crypto-Ride-Driver";
+			sourceTree = "<group>";
+		};
+		304440052A58ABE50059ABA7 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				304440062A58ABE50059ABA7 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		3044400D2A58AFAE0059ABA7 /* Contract */ = {
+			isa = PBXGroup;
+			children = (
+				3044400B2A58AFA50059ABA7 /* Contracts.swift */,
+				304440122A58B1000059ABA7 /* Events.swift */,
+				304440142A58B1180059ABA7 /* Methods.swift */,
+			);
+			path = Contract;
+			sourceTree = "<group>";
+		};
+		3044400E2A58AFBF0059ABA7 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		3044400F2A58AFCE0059ABA7 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3044402D2A58CF9C0059ABA7 /* WalletServices.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		304440102A58AFDA0059ABA7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				3008C7162A592DE200E8EA5B /* StringUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		304440282A58C43C0059ABA7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3008C70B2A59198C00E8EA5B /* Util */,
+				3008C6F62A58EEE300E8EA5B /* Registration */,
+				304440292A58C4700059ABA7 /* Login */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		304440292A58C4700059ABA7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				304440012A58ABE30059ABA7 /* LoginView.swift */,
+				3044402A2A58C4880059ABA7 /* LoginViewModel.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		974A840B4CCB4CECAAD6557E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6CEC30E6CDB4F3F27B592E38 /* Pods-Crypto-Ride-Driver.debug.xcconfig */,
+				88E1E08E838E660A84B0F05C /* Pods-Crypto-Ride-Driver.release.xcconfig */,
+				5190122AAAF931627A3AC73F /* Pods-Crypto-Ride-Passenger.debug.xcconfig */,
+				0B05039702F8EA9FB5209202 /* Pods-Crypto-Ride-Passenger.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D7D03324506D44CA712A5D9B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				13F8A00925EA8436F75DCDBD /* Pods_Crypto_Ride_Driver.framework */,
+				9D73017761BE67247FF52C82 /* Pods_Crypto_Ride_Passenger.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		30443FEA2A58ABAF0059ABA7 /* Crypto-Ride-Passenger */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 30443FF62A58ABB20059ABA7 /* Build configuration list for PBXNativeTarget "Crypto-Ride-Passenger" */;
+			buildPhases = (
+				B7676C9C8BB1C719BAD6B217 /* [CP] Check Pods Manifest.lock */,
+				30443FE72A58ABAF0059ABA7 /* Sources */,
+				30443FE82A58ABAF0059ABA7 /* Frameworks */,
+				30443FE92A58ABAF0059ABA7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Crypto-Ride-Passenger";
+			productName = "Crypto-Ride-Passenger";
+			productReference = 30443FEB2A58ABAF0059ABA7 /* Crypto-Ride-Passenger.app */;
+			productType = "com.apple.product-type.application";
+		};
+		30443FFC2A58ABE30059ABA7 /* Crypto-Ride-Driver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 304440082A58ABE50059ABA7 /* Build configuration list for PBXNativeTarget "Crypto-Ride-Driver" */;
+			buildPhases = (
+				9D5A6AB0050206484B26A126 /* [CP] Check Pods Manifest.lock */,
+				30443FF92A58ABE30059ABA7 /* Sources */,
+				30443FFA2A58ABE30059ABA7 /* Frameworks */,
+				30443FFB2A58ABE30059ABA7 /* Resources */,
+				CFA6A8EEA7D3072F0BE88830 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Crypto-Ride-Driver";
+			productName = "Crypto-Ride-Driver";
+			productReference = 30443FFD2A58ABE30059ABA7 /* Crypto-Ride-Driver.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		30443FCE2A58AB720059ABA7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					30443FEA2A58ABAF0059ABA7 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					30443FFC2A58ABE30059ABA7 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = 30443FD12A58AB720059ABA7 /* Build configuration list for PBXProject "Crypto-Ride" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 30443FCD2A58AB720059ABA7;
+			productRefGroup = 30443FD72A58AB720059ABA7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				30443FEA2A58ABAF0059ABA7 /* Crypto-Ride-Passenger */,
+				30443FFC2A58ABE30059ABA7 /* Crypto-Ride-Driver */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		30443FE92A58ABAF0059ABA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				30443FF52A58ABB20059ABA7 /* Preview Assets.xcassets in Resources */,
+				30443FF22A58ABB20059ABA7 /* Assets.xcassets in Resources */,
+				304440262A58BC610059ABA7 /* Media.xcassets in Resources */,
+				304440232A58BBB20059ABA7 /* AtomicAge-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30443FFB2A58ABE30059ABA7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				304440072A58ABE50059ABA7 /* Preview Assets.xcassets in Resources */,
+				304440042A58ABE50059ABA7 /* Assets.xcassets in Resources */,
+				304440272A58BC610059ABA7 /* Media.xcassets in Resources */,
+				304440242A58BBB20059ABA7 /* AtomicAge-Regular.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9D5A6AB0050206484B26A126 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Crypto-Ride-Driver-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B7676C9C8BB1C719BAD6B217 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Crypto-Ride-Passenger-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CFA6A8EEA7D3072F0BE88830 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Crypto-Ride-Driver/Pods-Crypto-Ride-Driver-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Crypto-Ride-Driver/Pods-Crypto-Ride-Driver-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Crypto-Ride-Driver/Pods-Crypto-Ride-Driver-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		30443FE72A58ABAF0059ABA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3008C6F82A58EF5100E8EA5B /* RegisterView.swift in Sources */,
+				3008C6FB2A58EF5E00E8EA5B /* RegisterViewModel.swift in Sources */,
+				304440132A58B1000059ABA7 /* Events.swift in Sources */,
+				3008C7022A59119800E8EA5B /* VehicleRegistration.swift in Sources */,
+				30443FF02A58ABAF0059ABA7 /* ContentView.swift in Sources */,
+				3008C71B2A59F4BF00E8EA5B /* WalletGenerationView.swift in Sources */,
+				3008C7052A59122B00E8EA5B /* LocationRegistration.swift in Sources */,
+				3008C6F42A58EB6100E8EA5B /* Credentials.swift in Sources */,
+				3044402B2A58C4880059ABA7 /* LoginViewModel.swift in Sources */,
+				3008C7272A5A331500E8EA5B /* RegOverView.swift in Sources */,
+				30443FEE2A58ABAF0059ABA7 /* Crypto_Ride_PassengerApp.swift in Sources */,
+				304440152A58B1180059ABA7 /* Methods.swift in Sources */,
+				3008C7172A592DE300E8EA5B /* StringUtils.swift in Sources */,
+				3044400C2A58AFA60059ABA7 /* Contracts.swift in Sources */,
+				3008C71E2A59F63300E8EA5B /* WalletOverview.swift in Sources */,
+				3008C6FF2A58FBF000E8EA5B /* DriverRegistration.swift in Sources */,
+				3044402E2A58CF9C0059ABA7 /* WalletServices.swift in Sources */,
+				3008C7082A5916BD00E8EA5B /* PaymentRegistration.swift in Sources */,
+				3008C7212A5A085D00E8EA5B /* WalletPayment.swift in Sources */,
+				3008C7242A5A159A00E8EA5B /* WalletQRCodeView.swift in Sources */,
+				3008C70D2A591A2500E8EA5B /* CircleImage.swift in Sources */,
+				3008C7102A591A4B00E8EA5B /* CircleModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		30443FF92A58ABE30059ABA7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3008C7112A591A4B00E8EA5B /* CircleModel.swift in Sources */,
+				3008C7002A58FBF000E8EA5B /* DriverRegistration.swift in Sources */,
+				304440022A58ABE30059ABA7 /* LoginView.swift in Sources */,
+				304440002A58ABE30059ABA7 /* Crypto_Ride_DriverApp.swift in Sources */,
+				3008C7222A5A085D00E8EA5B /* WalletPayment.swift in Sources */,
+				3008C7182A592DE300E8EA5B /* StringUtils.swift in Sources */,
+				3008C70E2A591A2500E8EA5B /* CircleImage.swift in Sources */,
+				3044402F2A58CF9C0059ABA7 /* WalletServices.swift in Sources */,
+				3008C7092A5916BD00E8EA5B /* PaymentRegistration.swift in Sources */,
+				3008C6F52A58EB6100E8EA5B /* Credentials.swift in Sources */,
+				3008C7032A59119800E8EA5B /* VehicleRegistration.swift in Sources */,
+				3008C71C2A59F4C000E8EA5B /* WalletGenerationView.swift in Sources */,
+				3044401A2A58B38E0059ABA7 /* ContentView.swift in Sources */,
+				3008C7282A5A331500E8EA5B /* RegOverView.swift in Sources */,
+				3008C6F92A58EF5100E8EA5B /* RegisterView.swift in Sources */,
+				3044402C2A58C4880059ABA7 /* LoginViewModel.swift in Sources */,
+				3008C7062A59122B00E8EA5B /* LocationRegistration.swift in Sources */,
+				3008C6FC2A58EF5E00E8EA5B /* RegisterViewModel.swift in Sources */,
+				304440182A58B34E0059ABA7 /* Authentication.swift in Sources */,
+				3008C71F2A59F63300E8EA5B /* WalletOverview.swift in Sources */,
+				3008C7252A5A159A00E8EA5B /* WalletQRCodeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		30443FE22A58AB730059ABA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		30443FE32A58AB730059ABA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		30443FF72A58ABB20059ABA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5190122AAAF931627A3AC73F /* Pods-Crypto-Ride-Passenger.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Crypto-Ride-Passenger/Preview Content\"";
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.Crypto-Ride-Passenger";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		30443FF82A58ABB20059ABA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B05039702F8EA9FB5209202 /* Pods-Crypto-Ride-Passenger.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Crypto-Ride-Passenger/Preview Content\"";
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.Crypto-Ride-Passenger";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		304440092A58ABE50059ABA7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6CEC30E6CDB4F3F27B592E38 /* Pods-Crypto-Ride-Driver.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Crypto-Ride-Driver/Preview Content\"";
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Crypto-Ride-Driver/Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.Crypto-Ride-Driver";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		3044400A2A58ABE50059ABA7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 88E1E08E838E660A84B0F05C /* Pods-Crypto-Ride-Driver.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Crypto-Ride-Driver/Preview Content\"";
+				DEVELOPMENT_TEAM = XUYDZSBQ86;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Crypto-Ride-Driver/Info.plist";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "MOT.Crypto-Ride-Driver";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		30443FD12A58AB720059ABA7 /* Build configuration list for PBXProject "Crypto-Ride" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30443FE22A58AB730059ABA7 /* Debug */,
+				30443FE32A58AB730059ABA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		30443FF62A58ABB20059ABA7 /* Build configuration list for PBXNativeTarget "Crypto-Ride-Passenger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				30443FF72A58ABB20059ABA7 /* Debug */,
+				30443FF82A58ABB20059ABA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		304440082A58ABE50059ABA7 /* Build configuration list for PBXNativeTarget "Crypto-Ride-Driver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				304440092A58ABE50059ABA7 /* Debug */,
+				3044400A2A58ABE50059ABA7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 30443FCE2A58AB720059ABA7 /* Project object */;
+}

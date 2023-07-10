@@ -1,0 +1,36 @@
+PODS:
+  - BigInt (5.2.0)
+  - CryptoSwift (1.5.1)
+  - secp256k1.c (0.1.2)
+  - Starscream (4.0.4)
+  - Web3Core (3.1.2):
+    - BigInt (~> 5.2.0)
+    - CryptoSwift (~> 1.5.1)
+    - secp256k1.c (~> 0.1)
+  - web3swift (3.1.2):
+    - Starscream (~> 4.0.4)
+    - Web3Core (~> 3.1.2)
+
+DEPENDENCIES:
+  - web3swift
+
+SPEC REPOS:
+  trunk:
+    - BigInt
+    - CryptoSwift
+    - secp256k1.c
+    - Starscream
+    - Web3Core
+    - web3swift
+
+SPEC CHECKSUMS:
+  BigInt: f668a80089607f521586bbe29513d708491ef2f7
+  CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
+  secp256k1.c: db47b726585d80f027423682eb369729e61b3b20
+  Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  Web3Core: 050eb18f0434ac16c42eb7b2270fbce325935128
+  web3swift: 8496f6615c3a1f86e7c9e5fe16c5422ef181527b
+
+PODFILE CHECKSUM: a3b937369bef894c2e34fd0eaf9d97722caf366b
+
+COCOAPODS: 1.12.0
