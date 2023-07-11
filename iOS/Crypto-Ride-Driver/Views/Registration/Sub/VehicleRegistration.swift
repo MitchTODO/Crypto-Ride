@@ -14,7 +14,7 @@ struct VehicleRegistrationView: View {
     @StateObject private var registerVM = RegisterViewModel()
     var body: some View {
         VStack{
-            Text("Vehicle Profile").font(.title2)
+            Text("Vehicle Profile").font(.title3).bold()
             EditableCircularProfileImage( systemImage: "car")
                                     .environmentObject(registrationVM.profilePic)
                                     .onChange(of: registrationVM.profilePic.imageData, perform: { data in

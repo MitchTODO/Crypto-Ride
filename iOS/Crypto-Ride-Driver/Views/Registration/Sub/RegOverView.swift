@@ -10,6 +10,7 @@ import SwiftUI
 struct RegOverView: View {
     
     @EnvironmentObject var registrationVM:RegisterViewModel
+    @EnvironmentObject var authentication:Authentication
     
     var body: some View {
         ScrollView {
@@ -112,7 +113,9 @@ struct RegOverView: View {
             .cornerRadius(15)
             
             Button(action: {
-                print("register")
+                // Login
+                authentication.updateAuthState(goto: .main)
+                
             }, label: {
                 Spacer()
                 Text("Register").bold().padding(6)

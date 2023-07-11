@@ -11,10 +11,12 @@ struct LoginView: View {
     
     @StateObject private var loginVM = LoginViewModel()
     @EnvironmentObject var authentication:Authentication
+
  
     var body: some View {
         VStack {
             Text("Crypto Ride").font(.custom("AtomicAge-Regular", size: 36))
+            
             Spacer()
             HStack{
                 Text("Welcome Driver")
@@ -22,31 +24,52 @@ struct LoginView: View {
                     .font(.custom("AtomicAge-Regular", size: 25))
                 Spacer()
             }
-            
-            Button(action: {
-                loginVM.login() { result in
-                    authentication.updateAuthState(goto: result)
+            HStack{
+                if WalletServices.shared.hasKeyStore {
+                    // Switch between faceId and Password
+                    TextField("",text: $loginVM.credentials.password)
+                        .disabled(loginVM.isloading)
+                        .textFieldStyle(.roundedBorder)
                 }
-            }, label: {
-                Spacer()
-                Text("Sign Up")
-                    .font(.custom("AtomicAge-Regular", size: 15))
-                    .padding(10)
-                Spacer()
-                if loginVM.isloading {
-                    ProgressView()
-                        .tint(.white)
-                        .padding(10)
-                } else{
-                    Image(systemName:"arrowshape.right.fill")
-                        .padding(5)
-                }
-            })
-            .buttonStyle(.borderless)
-            .foregroundColor(.white)
-            .background(.black)
-            .cornerRadius(5)
-            
+
+                Button(action: {
+                    loginVM.login() { result in
+                        authentication.updateAuthState(goto: result)
+                    }
+                }, label: {
+                    
+                    // check if device has wallet under keystore
+                    if WalletServices.shared.hasKeyStore {
+                        Text("Login")
+                            .font(.custom("AtomicAge-Regular", size: 15))
+                            .padding(10)
+                    }else{
+                        Spacer()
+                        Text("Sign Up")
+                            .font(.custom("AtomicAge-Regular", size: 15))
+                            .padding(10)
+                        Spacer()
+                        if loginVM.isloading {
+                            ProgressView()
+                                .tint(.white)
+                                .padding(10)
+                        } else{
+                            Image(systemName:"arrowshape.right.fill")
+                                .padding(5)
+                        }
+                    }
+                    
+                })
+                .buttonStyle(.borderless)
+                .foregroundColor(.white)
+                .background(.black)
+                .cornerRadius(5)
+            }
+
+            Text("Import")
+                .font(.caption)
+                .bold()
+                .multilineTextAlignment(.center)
             
             Spacer()
             VStack(){

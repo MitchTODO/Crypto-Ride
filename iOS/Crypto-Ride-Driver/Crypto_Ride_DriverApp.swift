@@ -6,29 +6,29 @@
 //
 
 import SwiftUI
-// Import FireBase
+import FirebaseCore
 
 @main
 struct Crypto_Ride_DriverApp: App {
     @StateObject var authentication = Authentication()
-    
+
     init() {
-        // init firebase
+        // Init firebase
+        FirebaseApp.configure()
     }
     
     var body: some Scene {
         WindowGroup {
             switch (authentication.appState) {
-            case .main:
-                ContentView()
-                    .environmentObject(authentication)
-            case .login:
-                LoginView()
-                    .environmentObject(authentication)
-            case .register:
-                RegisterView()
-                    .environmentObject(authentication)
-                // register view
+                case .main:
+                    ContentView()
+                        .environmentObject(authentication)
+                case .login:
+                    LoginView()
+                        .environmentObject(authentication)
+                case .register:
+                    RegisterView()
+                        .environmentObject(authentication)
             }
         }
     }

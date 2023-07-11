@@ -15,25 +15,35 @@ struct WalletOverview: View {
         VStack {
             HStack{
                 Text("Wallet Address")
+                    .font(.headline)
                 Button(action: {
                     print("name")
                 }, label: {
                     Image(systemName: "info.circle.fill")
                 })
             }
-            WalletQRCodeView(address: "sdf", phone:"Number")
+            WalletQRCodeView(address: registrationVM.newWalletAddress, phone:"")
             Spacer()
-            Text("Write Down your recovery phase and store it in a safe location").font(.caption)
-            Text("IT WILL ONLY BE DISPLAYED ONCE.").font(.title3)
+            Text("Write Down your recovery phase and store it in a safe location")
+                .multilineTextAlignment(.center)
+                .padding(5)
+            Text("IT WILL ONLY BE DISPLAYED ONCE.")
+                .padding(5)
+                .font(.headline)
             
             VStack {
                 HStack {
                     Spacer()
-                    Text("recovery phase")
+                    Text(registrationVM.registerNewDriver.wallet.mnemonics)
+                        .multilineTextAlignment(.center)
+                        .bold()
+                        .lineSpacing(5)
+                        .padding(10)
+                    
                     Spacer()
                 }
-               
-            }.background(Color.gray)
+            }.background(.secondary)
+                .cornerRadius(5)
                 .buttonBorderShape(.roundedRectangle)
             Spacer()
             Button(action: {
@@ -46,7 +56,7 @@ struct WalletOverview: View {
         }.navigationTitle("Recovery Phase")
             .textFieldStyle(.roundedBorder)
             .disableAutocorrection(true)
-            .padding(5)
+            .padding(10)
     }
 }
 

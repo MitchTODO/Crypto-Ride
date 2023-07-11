@@ -10,6 +10,7 @@ import SwiftUI
 struct RegisterView: View {
     
     @StateObject private var registerVM = RegisterViewModel()
+    @EnvironmentObject var authentication:Authentication
     
     private let buttons = ["person.fill", "car.fill", "mappin.and.ellipse", "dollarsign","paperplane.fill"]
     
@@ -39,7 +40,9 @@ struct RegisterView: View {
             
             case .OverView:
                 return AnyView (
-                    RegOverView().environmentObject(registerVM)
+                    RegOverView()
+                        .environmentObject(registerVM)
+                        .environmentObject(authentication)
                 )
         }
     }
@@ -78,9 +81,21 @@ struct RegisterView: View {
         return false
     }
     
-    
     var body: some View {
             VStack {
+                
+                HStack {
+                    Button(action: {
+                        authentication.updateAuthState(goto: .login)
+                    }, label: {
+                        Image(systemName: "chevron.left")
+                    })
+                    
+                    Spacer()
+                    Text("Registration").font(.custom("AtomicAge-Regular", size: 30))
+                    Spacer()
+                }
+                
                 HStack {
                     ForEach(buttons, id: \.self) { systemImage in
                         Button(action: {
@@ -93,10 +108,9 @@ struct RegisterView: View {
                                     .frame(minHeight: selected(image: systemImage))
                                     .background(Color.blue)
                                     .cornerRadius(10)
-                                    
-                                    
+                                
                             }
-                        }).padding()
+                        })
                             .disabled(isDisabled(image: systemImage))
                         
                      }

@@ -14,7 +14,6 @@ struct PaymentRegistration: View {
     @State var password = ""
     @State var rePassword = ""
     
-    
     // Switch sub views for wallet creation & payment views
     func switchSubView() -> AnyView {
         
@@ -36,21 +35,25 @@ struct PaymentRegistration: View {
     
     var body: some View {
         VStack {
-            Text("Wallet Creation").font(.title2)
+            
+            Text("Wallet Creation")
+                .padding(8)
+                .font(.title3)
+                .bold()
+            
             if (registrationVM.walletSubViews != .WalletPayment) {
-                Spacer()
-                Text("Your Crypto Wallet allows you to accept rides and get paid.")
-                Text("Dont be a Dummy, Important Info")
-                Text("Your profile and earnings are controlled by the wallet.").font(.footnote)
-                Text("Your Wallet is stored on this device and only recoverable through the recovery phase.").font(.footnote)
+                VStack(spacing: 8) {
+                    Text("Your Crypto Wallet allows you to accept rides and get paid.")
+                    Text("Dont be a Dummy, Important Info")
+                    Text("Your profile and earnings are controlled by the wallet.").font(.footnote)
+                    Text("Your Wallet is stored on this device and only recoverable through the recovery phase.").font(.footnote)
+                    
+                }.multilineTextAlignment(.center)
                 Spacer()
                 Divider()
                 Spacer()
             }
-
-
             switchSubView()
-            
         }
     }
 }

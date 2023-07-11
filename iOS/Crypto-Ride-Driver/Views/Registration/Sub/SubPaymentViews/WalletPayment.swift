@@ -50,10 +50,10 @@ struct WalletPayment: View {
             }).buttonStyle(.borderedProminent)
             .padding(10)
             
-        }.navigationTitle("Payment & Rate")
-            .textFieldStyle(.roundedBorder)
-                .disableAutocorrection(true)
-                .padding()
+        }
+        .textFieldStyle(.roundedBorder)
+            .disableAutocorrection(true)
+            .padding()
     }
 }
 

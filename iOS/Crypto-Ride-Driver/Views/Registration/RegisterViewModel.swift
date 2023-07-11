@@ -22,8 +22,8 @@ struct DriverInfo {
 struct Profile {
     var name = "Morgan Freeman"
     var phoneNumber = "+1 890 324 8457"
-    var soulName = "morgan"
-    var socialHandle = ""
+    var soulName = "morgan.soul"
+    var socialHandle = "@morgan23"
     var profileImageData:Data?
 }
 
@@ -38,14 +38,14 @@ struct Vehicle {
 
 struct Location {
     var zone = 1 // miles
-    var city = ""
-    var state = ""
+    var city = "Denver"
+    var state = "CO"
 }
 
 struct Rate{
     var fare = 20
-    var token = ""
-    var vault = ""
+    var token = "cUSD"
+    var vault = "0x00123abc"
 }
 
 struct NewWallet {
@@ -96,8 +96,7 @@ class RegisterViewModel:ObservableObject {
         case WalletPayment
     }
     
-    // login credentials
-    @Published var credentials = Credentials()
+
     // progress during loading
     @Published var isloading = false
     // keyStore errors
@@ -108,5 +107,27 @@ class RegisterViewModel:ObservableObject {
     // Register new driver
     @Published var registerNewDriver = RegisterDriver()
     
+    @Published var newWalletAddress = ""
 
+    // MARK: genKeyStore
+    /// Generate key store
+    public func genKeyStore(completion:@escaping(Bool) -> Void ) {
+        // login credentials
+        var credentials = Credentials()
+        credentials.password = registerNewDriver.wallet.password
+        WalletServices.shared.createKeyStore(credentials: credentials) { [unowned self] (result:Result<(String,String), WalletServices.KeyStoreServicesError>) in
+            DispatchQueue.main.async { [unowned self] in
+                switch result {
+                case .success(let walletDetails):
+                    // show mnemonices
+                    self.registerNewDriver.wallet.mnemonics = walletDetails.0
+                    self.newWalletAddress = walletDetails.1
+                    completion(true)
+                case .failure(let authError):
+                    self.error = authError
+                    completion(false)
+                }
+            }
+        }
+    }
 }

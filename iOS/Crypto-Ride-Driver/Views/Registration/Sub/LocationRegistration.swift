@@ -15,7 +15,8 @@ struct LocationRegistration: View {
 
     var body: some View {
             VStack{
-                Text("Location").font(.title2)
+                Text("Location").font(.title3).bold()
+                
                 Map(coordinateRegion: $region)
                     .frame(height: 350)
                     .cornerRadius(10)
@@ -43,7 +44,7 @@ struct LocationRegistration: View {
                 }).buttonStyle(.borderedProminent)
             }.textFieldStyle(.roundedBorder)
                     .disableAutocorrection(true)
-                    .padding(5)
+                    
     }
 }
 

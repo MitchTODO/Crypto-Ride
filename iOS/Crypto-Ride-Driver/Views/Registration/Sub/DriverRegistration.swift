@@ -18,7 +18,7 @@ struct DriverRegistrationView: View {
     var body: some View {
 
             VStack{
-                Text("Driver Profile").font(.title2)
+                Text("Driver Profile").font(.title3).bold()
                 EditableCircularProfileImage( systemImage: "person.crop.circle")
                     .environmentObject(registrationVM.profilePic)
                     .onChange(of: registrationVM.profilePic.imageData, perform: { data in
@@ -55,16 +55,18 @@ struct DriverRegistrationView: View {
                     }
                     VStack{
                         HStack{
-                            Text("Soul Name")
+                            TextField("Soul Name",text: $registrationVM.registerNewDriver.profile.soulName).padding(0)
                             Button(action: {
                                 
                             }, label: {
                                 Image(systemName: "info.circle.fill")
+                                    .scaledToFit()
+                                    .frame(width: 30, height: 30, alignment: .center)
+                                    .padding(1)
                             })
                             Spacer()
                         }
                         .padding(0)
-                        TextField("Soul Name",text: $registrationVM.registerNewDriver.profile.socialHandle).padding(0)
                     }
                     Spacer()
                     Button(action: {
@@ -73,9 +75,16 @@ struct DriverRegistrationView: View {
                         registrationVM.buttonNumber += 1
                     }, label: {
                         Spacer()
-                        Text("Next").bold()
+                        Text("Next")
+                            .bold()
+                            
+
                         Spacer()
                     }).buttonStyle(.borderedProminent)
+                        //.buttonStyle(.borderless)
+                        //.foregroundColor(.white)
+                        //.background(.black)
+                        //.cornerRadius(5)
                     
                     
                 }.textFieldStyle(.roundedBorder)

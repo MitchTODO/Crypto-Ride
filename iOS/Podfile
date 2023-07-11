@@ -6,6 +6,9 @@ target 'Crypto-Ride-Driver' do
   use_frameworks!
 
   # Pods for Crypto-Ride-Driver
+  pod 'GeoFire', '~> 4.0'
+  pod 'FirebaseFirestore'
+  pod 'FirebaseDatabase'
   pod 'web3swift'
 
 end
