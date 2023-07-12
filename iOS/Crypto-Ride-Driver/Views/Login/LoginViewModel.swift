@@ -28,18 +28,19 @@ class LoginViewModel:ObservableObject {
     
     // MARK: login
     func login(completion: @escaping(Authentication.ViewState) -> Void) {
+        isloading = true
         // Check and verify keystore
         if checkKeyStore() {
             // Checksum with existing keystore
             let keyStore = WalletServices.shared.getKeyManager()
             WalletServices.shared.verifyKeyStore(keyStore: keyStore, credentials: credentials) {  [unowned self] (result:Result<Bool, WalletServices.KeyStoreServicesError>) in
                 DispatchQueue.main.async { [unowned self] in
-                    isloading = false
                     switch result {
                         case .success:
                             // on success move state to main view
                             completion(.main)
                         case .failure(let authError):
+                            isloading = false
                             // on failure keep on view
                             credentials = Credentials()
                             error = authError

@@ -46,16 +46,22 @@ struct ContentView: View {
     func subView() -> AnyView {
         switch rideService.driverState {
         case .unknown:
-            return AnyView(Text("Unkown view"))
+            return AnyView(
+                ProgressView()
+            )
         case .notRegistered:
-            return AnyView(Text("Unkown view"))
+            return AnyView(
+                Text("Finish Registration")
+            )
         case .noRide:
             return AnyView(
                 ListenView()
                     .environmentObject(rideService)
             )
         case .inRide:
-            return AnyView(Text("Unkown view"))
+            return AnyView(
+                Text("Unkown view")
+            )
         }
     }
     
@@ -72,15 +78,15 @@ struct ContentView: View {
                     subView()
             }
             .task {
-                /*
                 // Get driver address
-                let driverAddress = ContractServices.shared.getWallet().address
+                let driverAddress = WalletServices.shared.getAddress().address
                 // check if driver is registered
                 rideService.isDriver(address:driverAddress ) {
                     isDriver in
-                        registered.isRegistered = isDriver
+                    
                         
                     if isDriver {
+                        /*
                         // If registered check if driver is in active ride
                         rideService.getActiveRide(address: driverAddress) {
                             rideId in
@@ -89,7 +95,7 @@ struct ContentView: View {
                                 rideService.driverState = .noRide
                             }else{
                                 // set observables rideId's
-                                webSocket.rideId = rideId
+                                //webSocket.rideId = rideId
                                 rideService.rideId = rideId
                                 // get ride details
                                 rideService.getRide(rideId: rideId) {
@@ -103,12 +109,12 @@ struct ContentView: View {
                                 rideService.driverState = .inRide
                             }
                         }
+                        */
                     }else{
                         // set view state to not registered
-                        rideService.driverState = .notRegistered
+                        authentication.updateAuthState(goto: .register)
                     }
                 }
-                */
             }
             .buttonStyle(.borderedProminent)
                 .safeAreaInset(edge: .top, content: {
@@ -147,9 +153,8 @@ struct ContentView: View {
                             //rideService.sendingWriteTx = false
                             print("Dismissed")
                     })
-                 
                 }
-                 */
+                */
            
         }
     }

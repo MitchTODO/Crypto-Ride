@@ -1,8 +1,8 @@
 //
 //  Methods.swift
-//  Crypto-Ride-Passenger
+//  Crypto-Ride
 //
-//  Created by mitchell tucker on 7/7/23.
+//  Created by mitchell tucker on 7/11/23.
 //
 
 import Foundation

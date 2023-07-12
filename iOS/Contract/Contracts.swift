@@ -1,20 +1,14 @@
 //
 //  Contracts.swift
-//  Crypto-Ride-Passenger
+//  Crypto-Ride
 //
-//  Created by mitchell tucker on 7/7/23.
+//  Created by mitchell tucker on 7/11/23.
 //
 
 import Foundation
 
-
 enum Contracts:Int {
     case RideManager = 0
-
-    case SocialConnect = 1
-    case SoulName = 2
-    case SoulBound = 3
-    case SoulStore = 4
     
     case Celo = 5
     case CUSD = 6

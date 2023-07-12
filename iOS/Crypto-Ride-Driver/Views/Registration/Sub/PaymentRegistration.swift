@@ -16,7 +16,6 @@ struct PaymentRegistration: View {
     
     // Switch sub views for wallet creation & payment views
     func switchSubView() -> AnyView {
-        
         switch(registrationVM.walletSubViews) {
             case .WalletGenerate:
                 return AnyView(
@@ -32,6 +31,7 @@ struct PaymentRegistration: View {
                 )
         }
     }
+    
     
     var body: some View {
         VStack {

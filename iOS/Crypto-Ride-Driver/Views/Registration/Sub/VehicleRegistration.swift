@@ -16,8 +16,8 @@ struct VehicleRegistrationView: View {
         VStack{
             Text("Vehicle Profile").font(.title3).bold()
             EditableCircularProfileImage( systemImage: "car")
-                                    .environmentObject(registrationVM.profilePic)
-                                    .onChange(of: registrationVM.profilePic.imageData, perform: { data in
+                                    .environmentObject(registrationVM.vehiclePic)
+                                    .onChange(of: registrationVM.vehiclePic.imageData, perform: { data in
                                         // Set image data to profile struct
                                         //registrationVM.registerNewDriver.profile.profileImageData = data
                                         print(data)

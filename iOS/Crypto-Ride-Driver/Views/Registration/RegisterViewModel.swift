@@ -70,8 +70,8 @@ class RegisterViewModel:ObservableObject {
     @Published var selectedView = "person.fill"
     
     @Published var buttonNumber = 1
-
-
+    
+    
     enum ViewState {
         case login
         case register
@@ -96,19 +96,30 @@ class RegisterViewModel:ObservableObject {
         case WalletPayment
     }
     
-
+    
     // progress during loading
     @Published var isloading = false
+    
     // keyStore errors
     @Published var error:WalletServices.KeyStoreServicesError?
+    
     // Circle Models
     @Published var profilePic = CircleModel()
     @Published var vehiclePic = CircleModel()
+    
     // Register new driver
     @Published var registerNewDriver = RegisterDriver()
     
     @Published var newWalletAddress = ""
-
+    
+    init() {
+        if WalletServices.shared.hasKeyStore {
+            // Skip wallet generation if a wallet already exist
+            walletSubViews = .WalletOverview
+            newWalletAddress = WalletServices.shared.getAddress().address
+        }
+    }
+    
     // MARK: genKeyStore
     /// Generate key store
     public func genKeyStore(completion:@escaping(Bool) -> Void ) {
@@ -130,4 +141,31 @@ class RegisterViewModel:ObservableObject {
             }
         }
     }
+    
+    
+    // MARK: registerDriver
+    /// Registers driver address to ride manager smart contract
+    ///
+    /// - Parameters:
+    ///         `rate` Integer : drivers flate fee per hour of drive time
+    ///         `name`String:   name of driver
+    ///         `car` String : car description
+    ///
+    /// - Returns:
+    ///         - Escaping <TranscationSendingResult>
+    public func registerDriver(rate:Int,name:String,car:String, completion:@escaping(TransactionSendingResult) -> Void) {
+        let params = [rate,name,car] as [AnyObject]
+        ContractServices.shared.write(contractId: .RideManager, method: "addDriver", parameters: params, password: registerNewDriver.wallet.password, nil) { result in
+            DispatchQueue.main.async { [unowned self] in
+                switch(result){
+                case .success(let result):
+                    completion(result)
+                case .failure(let error):
+                    print(error)
+                    //self.error = error
+                }
+            }
+        }
+    }
+    
 }

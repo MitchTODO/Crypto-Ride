@@ -48,12 +48,16 @@ class WalletServices {
             guard let keystore = readKeyStore() else { return }
             keystoreManager = keystore
             hasKeyStore = true
+        
     }
     
     func getKeyManager() -> BIP32Keystore {
         return keystoreManager!
     }
     
+    func getAddress() -> EthereumAddress {
+        return keystoreManager!.addresses!.first!
+    }
 
     // MARK: createKeyStore
     /// Creates new keystore and writes to file
@@ -69,7 +73,7 @@ class WalletServices {
             do {
                 let bitsOfEntropy: Int = 256 // Entropy is a measure of password strength. Usually used 128 or 256 bits.
                 let mnemonics = try! BIP39.generateMnemonics(bitsOfEntropy: bitsOfEntropy)!
-                /*
+                
                 // TODO Change password to biometric password
                 let keystore = try! BIP32Keystore(
                     mnemonics: mnemonics,
@@ -93,9 +97,9 @@ class WalletServices {
                 let status = SecItemAdd(addQuery as CFDictionary, nil)
                 
                 guard status == errSecSuccess else { throw KeyStoreServicesError.failedToSaveKeyStore}
-                */
-                //let walletAddress = keystore.addresses!.first!.address
-                completion(.success((mnemonics,"0x4D00Ce3ED2F2505Fd361b0A922DD429Bc42C59Df")))
+                
+                let walletAddress = keystore.addresses!.first!.address
+                completion(.success((mnemonics,walletAddress)))
             } catch {
                 completion(.failure(.failedToSaveKeyStore))
             }
@@ -139,7 +143,6 @@ class WalletServices {
                     kSecReturnData as String  : kCFBooleanTrue!,
                     kSecMatchLimit as String  : kSecMatchLimitOne ]
     
-        
         var dataTypeRef: AnyObject? = nil
         let status: OSStatus = SecItemCopyMatching(query as CFDictionary, &dataTypeRef)
     

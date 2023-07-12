@@ -90,6 +90,7 @@ class RideService:ObservableObject{
     init(password:String){
         self.password = password
     }
+    */
     
     // MARK: isDriver
     /// Async method to fetch ride details from `rideManager` contract
@@ -99,7 +100,6 @@ class RideService:ObservableObject{
     ///
     func isDriver(address:String,completion:@escaping(Bool) -> Void) {
         let params = [address] as [AnyObject]
-        
         ContractServices.shared.read(contractId: Contracts.RideManager, method: "isDriver", parameters : params)
         { result in
             DispatchQueue.main.async { [self] in
@@ -116,6 +116,7 @@ class RideService:ObservableObject{
         }
     }
     
+    /*
     // MARK: getReputation
     /// Async method to fetch reputation for a given address in `rideManager` contract
     ///
@@ -146,7 +147,8 @@ class RideService:ObservableObject{
             }
         }
     }
-
+    */
+    
     // MARK: getActiveRide
     /// Async method to fetch active ride for a given address in `rideManager` contract
     ///
@@ -156,7 +158,6 @@ class RideService:ObservableObject{
     ///
     /// - Returns: completion: `String` on success
     ///
-
     func getActiveRide(address:String,completion:@escaping(String) -> Void) {
  
         let params = [address] as [AnyObject]
@@ -181,7 +182,7 @@ class RideService:ObservableObject{
         }
     }
     
-    
+    /*
     // MARK: getRide
     /// Async method to get ride details from the `rideManager` contract
     ///

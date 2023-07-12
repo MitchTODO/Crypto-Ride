@@ -10,6 +10,7 @@ import SwiftUI
 struct WalletOverview: View {
     
     @EnvironmentObject var registrationVM:RegisterViewModel
+    @StateObject var balance = Balance()
     
     var body: some View {
         VStack {
@@ -23,10 +24,47 @@ struct WalletOverview: View {
                 })
             }
             WalletQRCodeView(address: registrationVM.newWalletAddress, phone:"")
+            
+            HStack{
+                HStack{
+                    Image("cUSD")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 30, alignment: .center)
+                    Text("\(balance.cUSD)")
+                    
+                }
+                Divider()
+                HStack{
+                    Image("Celo")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 40, height: 40, alignment: .center)
+                    Text("\(balance.CELO)")
+                    
+                }
+                Button{
+                    balance.getTokenBalance(address: registrationVM.newWalletAddress, token: .CUSD)
+                    balance.getTokenBalance(address: registrationVM.newWalletAddress, token: .Celo)
+                    
+                }label: {
+                    Image(systemName: "arrow.clockwise.circle.fill")
+                        .resizable()
+                        .interpolation(.none)
+                        .scaledToFit()
+                        .frame(width: 20, height: 20, alignment: .center)
+                }.buttonStyle(.borderless)
+            }.task {
+                balance.getTokenBalance(address: registrationVM.newWalletAddress, token: .CUSD)
+                balance.getTokenBalance(address: registrationVM.newWalletAddress, token: .Celo)
+                
+            }
+            
             Spacer()
             Text("Write Down your recovery phase and store it in a safe location")
-                .multilineTextAlignment(.center)
                 .padding(5)
+                .multilineTextAlignment(.center)
+            
             Text("IT WILL ONLY BE DISPLAYED ONCE.")
                 .padding(5)
                 .font(.headline)
@@ -53,6 +91,8 @@ struct WalletOverview: View {
                 Text("Next").bold()
                 Spacer()
             }).buttonStyle(.borderedProminent)
+              .disabled(balance.CELO.isEmpty)
+            
         }.navigationTitle("Recovery Phase")
             .textFieldStyle(.roundedBorder)
             .disableAutocorrection(true)

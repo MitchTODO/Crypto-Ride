@@ -78,7 +78,7 @@ struct RegOverView: View {
                         Text("Work Radius").bold()
                     }
                     Spacer()
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .trailing, spacing: 10) {
                         Text(registrationVM.registerNewDriver.location.city)
                         Text(registrationVM.registerNewDriver.location.state)
                         Text("\(registrationVM.registerNewDriver.location.zone)")
@@ -113,14 +113,22 @@ struct RegOverView: View {
             .cornerRadius(15)
             
             Button(action: {
-                // Login
-                authentication.updateAuthState(goto: .main)
-                
+                registrationVM.isloading = true
+                registrationVM.registerDriver(rate: 1, name: "", car: "") { txHash in
+                    print(txHash)
+                    registrationVM.isloading = false
+                    authentication.updateAuthState(goto: .main)
+                }
             }, label: {
-                Spacer()
-                Text("Register").bold().padding(6)
-                Spacer()
+                if registrationVM.isloading {
+                    ProgressView()
+                }else{
+                    Spacer()
+                    Text("Register").bold().padding(6)
+                    Spacer()
+                }
             }).buttonStyle(.borderedProminent)
+            
         }
     }
 }

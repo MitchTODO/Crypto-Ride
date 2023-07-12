@@ -7,6 +7,8 @@
 
 import Foundation
 import web3swift
+import Web3Core
+
 import BigInt
 
 
@@ -14,46 +16,11 @@ class ContractServices {
     
     // Shared contract instance
     static let shared = ContractServices()
-    /*
+    
     // Web3 instance
-    private var w3:web3
-    // Wallet from keyManager
-    private var wallet:Wallet
+    private var w3:Web3?
+    private var wallet:Wallet?
     
-    // Contract addresses
-    private var rideManagerContract:web3.web3contract
-    private var cUSDContract:web3.web3contract
-    private var CeloContract:web3.web3contract
-       
-    init() {
-        
-        // Get wallet data from keystore manager
-        let keystore = WalletServices.shared.keystoreManager!
-        let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
-        let address = keystore.addresses!.first!.address
-        wallet = Wallet(address: address, data: keyData, name: "Driver", isHD: true)
-  
-        // add keystore to keystoreManager used for signing tx
-        let keystoreManager = KeystoreManager([keystore])
-        // Set up web provider
-        let provider = Web3HttpProvider(URL(string: alfajoresTestnet.rpcEndpoint)!, network: .Custom(networkID: alfajoresTestnet.chainId))
-        w3 = web3(provider: provider!)
-        w3.addKeystoreManager(keystoreManager)
-        
-        
-        // TODO change erc20 abi with celo's token abi
-        // Construct contract address
-        cUSDContract = w3.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVerison)!
-        CeloContract = w3.contract(Web3.Utils.erc20ABI, at: CELO , abiVersion: abiVerison)!
-        rideManagerContract = w3.contract(rideManagerAbi,at:rideManagerAddress,abiVersion:abiVerison )!
-       
-    }
-    
-    // MARK: getWallet
-    /// Returns wallet struct
-    func getWallet() -> Wallet {
-        return self.wallet
-    }
     
     // MARK: getContract
     /// match contract enum to web3 contract
@@ -63,15 +30,40 @@ class ContractServices {
     ///              `contract` : Contracts  Enum - Contract  to get
     ///
     /// - Returns: web3.web3contract of related contract
-    private func getContract(contract:Contracts) -> web3.web3contract{
+    /// 
+    private func getContract(contract:Contracts) async throws -> Web3.Contract {
+        
+        // Get wallet data from keystore manager
+        let keystore = WalletServices.shared.keystoreManager!
+        let keyData = try! JSONEncoder().encode(keystore.keystoreParams);
+        
+        let address = keystore.addresses!.first!.address
+
+        wallet = Wallet(address: address, data: keyData, name: "Driver", isHD: true)
+        
+        // add keystore to keystoreManager used for signing tx
+        let keystoreManager = KeystoreManager([keystore])
+        
+        // Set up web provider
+        guard let provider = await Web3HttpProvider(URL(string: alfajoresTestnet.rpcEndpoint)!, network: .Custom(networkID: alfajoresTestnet.chainId)) else {
+            // failed to create provider
+            throw ContractError(title: "Provider Error", description: "Failed to init provider.")
+        }
+        
+        w3 = Web3(provider: provider)
+        w3!.addKeystoreManager(keystoreManager)
+        
+        // TODO change erc20 abi with celo's token abi
+        // Construct contract address
         switch(contract) {
         case Contracts.RideManager:
-            return rideManagerContract
+            return(w3!.contract(rideManagerAbi, at: rideManagerAddress, abiVersion:abiVersion)!)
         case Contracts.CUSD:
-            return cUSDContract
+            return(w3!.contract(Web3.Utils.erc20ABI, at: cUSD , abiVersion: abiVersion)!)
         case Contracts.Celo:
-            return CeloContract
+            return(w3!.contract(Web3.Utils.erc20ABI, at: CELO , abiVersion: abiVersion)!)
         }
+
     }
     
     // MARK: read
@@ -88,30 +80,22 @@ class ContractServices {
     /// - Returns: completion: <String:Any> on success , `ContractError` on failure
     ///
     func read(contractId:Contracts,method:String,parameters:[AnyObject],completion:@escaping(Result<[String:Any],ContractError>) -> Void) {
-    
-        let contract = getContract(contract: contractId)
-        DispatchQueue.global().asyncAfter(deadline: .now()){ [unowned self] in
-            do{
+        Task {
+            do {
+                let contract = try await getContract(contract: contractId)
+                let from = EthereumAddress(wallet!.address)
                 
-                let senderAddress = EthereumAddress(wallet.address)
-
                 let extraData: Data = Data() // Extra data for contract method
                 
+                guard let readOp = contract.createReadOperation(method,parameters: parameters,extraData: extraData) else {
+                    // failed to create tx
+                    throw ContractError(title: "Failed to Read", description: "No Read")
+                }
+                readOp.transaction.from = from
                 
-                var options = TransactionOptions.defaultOptions
-                options.from = senderAddress
-                options.gasPrice = .automatic
-                options.gasLimit = .automatic
-                
-                let tx = contract.read(method,
-                                       parameters: parameters,
-                                       extraData: extraData,
-                                       transactionOptions: options)!
-              
-                let result = try tx.call()
-               
-                completion(.success(result))
-            }catch {
+                let response = try await readOp.callContractMethod()
+                completion(.success(response))
+            } catch {
                 completion(.failure(ErrorFilter.typeCheck(error: error)))
             }
         }
@@ -128,35 +112,38 @@ class ContractServices {
     ///
     /// - Returns: completion: `TransactionSendingResult` on success , `ContractError` on failure
     ///
-    func write(contractId:Contracts,method:String,parameters:[AnyObject],password:String,completion:@escaping(Result<TransactionSendingResult,ContractError>) -> Void) {
-        let contract = getContract(contract: contractId)
-        DispatchQueue.global().async{ [unowned self] in
-            do{
-                let senderAddress = EthereumAddress(wallet.address)
-            
+    func write(contractId:Contracts,method:String,parameters:[AnyObject],password:String,_ value:BigUInt?,completion:@escaping(Result<TransactionSendingResult,ContractError>) -> Void) {
+        
+        Task {
+            do {
+                let contract = try await getContract(contract: contractId)
+                let from = EthereumAddress(wallet!.address)
                 let extraData: Data = Data() // Extra data for contract method
-                //let amount = Web3.Utils.parseToBigUInt("1", units: .eth)
-                var options = TransactionOptions.defaultOptions
-                options.from = senderAddress
-                options.gasPrice = .manual(20000000000)
-                options.gasLimit = .manual(878423)
-                    
-                let tx = contract.write(
-                    method,
-                    parameters: parameters,
-                    extraData: extraData,
-                    transactionOptions: options)!
                 
-                let result = try tx.send(password: password)
-           
-                completion(.success(result))
+                //var transaction:CodableTransaction = .emptyTransaction
+        
+                //transaction.from = from ?? transaction.sender
+                //if value != nil {
+                //    transaction.value = value!
+                //}
+
+                //transaction.gasPrice = BigUInt(20000000000)
+                //transaction.gasLimit = BigUInt(878423)
+                
+                guard let writeOp = contract.createWriteOperation(method,parameters: parameters,extraData: extraData) else {
+                    throw ContractError(title: "Failed to Write", description: "No Write")
+                }
+                
+                //print(from)
+                writeOp.transaction.from = from
+                writeOp.transaction.gasPrice = BigUInt(20000000000)
+                writeOp.transaction.gasLimit = BigUInt(878423)
+    
+                let response = try await writeOp.writeToChain(password: "",sendRaw: true)
+                completion(.success(response))
             }catch {
-                
                 completion(.failure(ErrorFilter.typeCheck(error: error)))
-                
             }
         }
     }
-     */
-    
 }

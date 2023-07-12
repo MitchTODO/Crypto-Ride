@@ -112,13 +112,13 @@ struct RegisterView: View {
                             }
                         })
                             .disabled(isDisabled(image: systemImage))
-                        
                      }
                 }
                 ScrollView{
                     switchSubView()
                 }
-            }
+                
+            }.disabled(registerVM.isloading)
             .padding()
         
     }
